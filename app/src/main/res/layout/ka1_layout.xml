@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/ka_tu"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/minshengcard2"/>
+    <TextView
+        android:id="@+id/title_card"
+        android:layout_toRightOf="@id/ka_tu"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/ka_tu"
+        android:layout_marginTop="10dp"
+        android:textSize="13sp"
+        android:textColor="#f00"
+        android:text="民生车车信用卡"/>
+    <TextView
+        android:id="@+id/card_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ka_tu"
+        android:layout_below="@id/title_card"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="10sp"
+        android:text="全年1元洗车，加油最高月返100\n机场1元停车，车险最高15%回馈"
+        />
+    <ImageView
+        android:id="@+id/ka1_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/lijishenqing"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        />
+
+
+</RelativeLayout>

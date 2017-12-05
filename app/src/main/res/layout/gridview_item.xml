@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="80dp"
+    android:layout_height="80dp">
+    <ImageView
+    android:src="@mipmap/ic_launcher"
+    android:id="@+id/MainActivityImage"
+    android:layout_width="35dp"
+    android:layout_height="35dp"
+    android:layout_gravity="center_horizontal"
+    />
+    <TextView
+        android:text="什么鬼"
+        android:textColor="@color/white"
+        android:id="@+id/MainActivityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="14sp"
+        android:lines="1"
+        android:layout_marginTop="8dp"
+        />
+
+</LinearLayout>

@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">芝麻付</string>
+    <string name="main_1">收款</string>
+    <string name="main_2">服务</string>
+    <string name="main_3">分享</string>
+    <string name="main_4">我的</string>
+    <string name="main_5">会员</string>
+    <string name="yes">确定</string>
+    <string name="no">取消</string>
+    <string name="tui_song_info1">1.此功能用于推送消息到手机屏幕显示。</string>
+    <string name="tui_song_info2">2.关闭该功能后将不会推送到手机屏幕显示。</string>
+    <string name="tui_song_info3">3.建议打开该功能，便于及时收到交易、审核、反润、等相关消息。</string>
+    <string name="add_vip">加入会员</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.hdyg.zhimaqb">
+
+    <!-- 允许连接网络 -->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--  -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- 允许使用相机权限 -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <!-- 调用硬件相机权限 -->
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <!-- 添加必要的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <!-- bugsdk所需权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+
+    <application
+        android:name=".util.SjApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="207ecec356c16"/>
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="9fa7753636203edaea01adc1b45c8f49"/>
+        <!-- ShareSDK的activity -->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <data android:scheme="tencent100371282"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <!-- 调用新浪原生SDK，需要注册的回调activity -->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <!-- 集成line客户端登录授权，需要添如下格式的过滤器 -->
+            <intent-filter>
+                <data android:scheme="line.1477692153"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <!-- 微信分享回调 -->
+        <activity
+            android:name=".view.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity android:name=".view.MainActivity"/>
+        <activity android:name=".view.UserLoginActivity"/>
+        <activity android:name=".view.UserRegistActivity"/>
+        <activity
+            android:name=".view.ShareH5WebViewActivity"
+            android:hardwareAccelerated="true"/>
+        <activity android:name=".view.home.BillActivity"/>
+        <activity android:name=".view.person.SetUpActivity"/>
+        <activity android:name=".view.person.TixianActivity"/>
+        <activity android:name=".view.person.SearchActivity"/>
+        <activity android:name=".view.person.RenzhengMainActivity"/>
+        <activity android:name=".view.person.IDCardActivity"/>
+
+        <activity
+            android:name=".view.WelcomeActivity"
+            android:theme="@style/ThemeSplash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.person.UpdatePwdActivity"/>
+        <activity android:name=".view.service.TuiguangActivity"/>
+        <activity android:name=".view.service.ShareQRCodeActivity"/>
+        <activity android:name=".view.home.PayMethodActivity"/>
+        <activity android:name=".view.home.PayMoneyQRCodeActivity"/>
+        <activity android:name=".view.service.MyProfitActivity"/>
+        <activity android:name=".view.service.MyTeamActivity"/>
+        <activity android:name=".view.service.MyTeamDownActivity"/>
+        <activity android:name=".view.service.BalanceCashActivity"/>
+        <activity android:name=".view.message.MessageDetailActivity"/>
+        <activity android:name=".view.person.TuiSongActivity"/>
+        <activity android:name=".view.home.OnlineUpdateActivity"/>
+        <activity android:name=".view.home.RechargeActivity"/>
+        <activity android:name=".view.person.MerchantActivity"/>
+
+        <activity android:name=".view.person.ResetBankCardActivity"/>
+        <activity android:name=".view.person.WithdrawalAccountActivity"/>
+        <activity android:name=".view.XinYongCardActivity"/>
+        <activity android:name=".view.service.XycardActivity"/>
+        <activity android:name=".view.GuideFirstActivity">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity android:name=".view.MoreActivity"/>
+        <activity android:name=".view.share.ShareDataListActivity">
+        </activity>
+        <activity android:name=".view.person.MeSchoolActivity">
+        </activity>
+        <activity android:name=".view.CameraActivity">
+        </activity>
+    </application>
+
+</manifest>

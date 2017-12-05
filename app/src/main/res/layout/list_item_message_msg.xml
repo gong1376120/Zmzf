@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/white"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_marginLeft="10dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:src="@mipmap/small"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="1dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="系统公告"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/tv_item_message_date"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2017.08.21  13:45:32"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_item_message_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="尊敬的客户：您好，为了..."
+            android:textColor="@color/text_color_green"/>
+    </LinearLayout>
+
+</LinearLayout>

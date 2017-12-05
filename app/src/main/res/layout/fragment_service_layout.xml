@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/bg_color"
+    android:layout_height="match_parent">
+    <include layout="@layout/top_bar_layout"/>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@color/main_color"
+                android:orientation="vertical">
+
+                <com.hdyg.zhimaqb.ui.MyGridView
+                    android:gravity="center"
+                    android:id="@+id/gv_service_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnWidth="44dp"
+                    android:numColumns="3"
+                    android:stretchMode="columnWidth"/>
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/btn_shape3">
+                <!--android:numColumns="auto_fit"       列数设置为自动-->
+                <!--android:columnWidth="90dp"          每列的宽度，也就是Item的宽度-->
+                <!--android:stretchMode="columnWidth"   缩放与列宽大小同步-->
+                <!--android:verticalSpacing="10dp"      垂直边距-->
+                <!--android:horizontalSpacing="10dp"    水平边距-->
+                <com.hdyg.zhimaqb.ui.MyGridView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/gv_service_center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="3"
+                    android:columnWidth="44dp"
+                    android:stretchMode="columnWidth"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+                    <com.sivin.Banner
+                        android:id="@+id/id_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+                <com.hdyg.zhimaqb.ui.MyGridView
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/gv_service_bettom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="3"
+                    android:columnWidth="44dp"
+                    android:stretchMode="columnWidth"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

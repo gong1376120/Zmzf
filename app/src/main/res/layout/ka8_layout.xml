@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ka_tu"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/xingyecard2" />
+
+    <TextView
+        android:id="@+id/title_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/ka_tu"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/ka_tu"
+        android:text="兴业爱奇艺银联联名信用卡金卡II"
+        android:textColor="#f00"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/card_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_card"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/ka_tu"
+        android:text="1、新户核卡后60日内满6笔200元限定交\n易赠半年爱奇艺VIP会员，详询官网。\n2、每月刷卡满额赠7天爱奇艺VIP会员。\n3、每个账单月首笔取现交易手"
+        android:textSize="10sp" />
+
+    <ImageView
+        android:id="@+id/ka8_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:src="@mipmap/lijishenqing" />
+</RelativeLayout>

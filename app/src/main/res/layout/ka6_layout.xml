@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/ka_tu"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/minshengcard7"/>
+    <TextView
+        android:id="@+id/title_card"
+        android:layout_toRightOf="@id/ka_tu"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/ka_tu"
+        android:layout_marginTop="10dp"
+        android:textSize="13sp"
+        android:textColor="#f00"
+        android:text="民生同道大叔星座联名卡"/>
+    <TextView
+        android:id="@+id/card_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ka_tu"
+        android:layout_below="@id/title_card"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="10sp"
+        android:text="12个星座，12张专属卡片\n独特3D立体工艺，可触摸到丰富表情\n同道大叔独家授权星座伴手礼\n同道大叔咖啡厅，全场95折优惠\n首年免年费，当年刷5笔免次年年费"
+        />
+    <ImageView
+        android:id="@+id/ka6_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/lijishenqing"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp" />
+</RelativeLayout>

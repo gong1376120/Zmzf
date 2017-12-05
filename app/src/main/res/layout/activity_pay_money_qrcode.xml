@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/btn_color"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/top_bar_layout"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="26dp"
+            android:orientation="vertical"
+            android:background="@drawable/btn_shape"
+            android:layout_marginTop="30dp">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="16dp"
+                    android:textColor="@color/text_color_black"
+                    android:text="扫描二维码"/>
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:id="@+id/paytype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="16dp"
+                    android:textColor="@color/text_color_black"
+                    android:text="支付"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_color"
+                android:layout_marginTop="10dp">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/pay_erweima_iv"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center"
+                android:id="@+id/pay_saveimg_ll"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="￥"
+                    android:textSize="30dp"
+                    android:textColor="@color/text_color_black"
+                    android:gravity="center" />
+                <TextView
+                    android:id="@+id/pay_getmoney_tv"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center|bottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="0.00"
+                    android:textSize="30dp"
+                    android:textColor="@color/text_color_gray" />
+            </LinearLayout>
+            <com.hdyg.zhimaqb.util.RevealLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp">
+                <Button
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/save_img"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_shape_green"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="保存图片"/>
+            </com.hdyg.zhimaqb.util.RevealLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

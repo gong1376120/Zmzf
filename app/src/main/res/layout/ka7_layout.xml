@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/ka_tu"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/xingyecard1"/>
+    <TextView
+        android:id="@+id/title_card"
+        android:layout_toRightOf="@id/ka_tu"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/ka_tu"
+        android:layout_marginTop="10dp"
+        android:textSize="13sp"
+        android:textColor="#f00"
+        android:text="兴业银联标准人民币信用卡金卡"/>
+    <TextView
+        android:id="@+id/card_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ka_tu"
+        android:layout_below="@id/title_card"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="10sp"
+        android:text="1、刷卡最高得价值4500元的Dyson豪礼；\n2、淘票票满20元立减10元；\n3、激活15天内取现手续费全免；绑定微信送2000积分。\n4、200万航意险。"
+        />
+    <ImageView
+        android:id="@+id/ka7_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/lijishenqing"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        />
+
+
+</RelativeLayout>

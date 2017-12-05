@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/rl_root"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color">
+
+    <com.hdyg.zhimaqb.util.RevealLayout
+        android:id="@+id/rl_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/top_bar_layout"/>
+
+    </com.hdyg.zhimaqb.util.RevealLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_head">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:max="100"
+            android:progressDrawable="@drawable/style_progress"
+            />
+
+        <WebView
+            android:id="@+id/view_webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/addvip_btn"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/btn_shape_yellow"
+        android:text="加入会员"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/iv_save"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="30dp"
+        android:visibility="gone"
+        android:src="@mipmap/ic_save"/>
+
+</RelativeLayout>
