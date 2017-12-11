@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import com.hdyg.zhimaqb.util.BaseUrlUtil;
 import com.hdyg.zhimaqb.util.LogUtil;
-import com.hdyg.zhimaqb.util.SharedPrefsUtil;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.StringUtil;
 import com.hdyg.zhimaqb.util.okhttp.CallBackUtil;
 import com.hdyg.zhimaqb.util.okhttp.OkhttpUtil;
@@ -30,6 +30,7 @@ public class UserPresenter implements UserContract.UserPresent {
     private UserContract.UserRegistSendMsgView registSendMsgView;
     private UserContract.UserMsgView userMsgView;
     private UserContract.ImgSendHttpView imgSendHttpView;
+    private UserContract.UserAuthenView userAuthenView;
     private Context context;
     private Map<String, String> reqMap;
 
@@ -53,7 +54,10 @@ public class UserPresenter implements UserContract.UserPresent {
         this.context = context;
     }
 
-
+    public UserPresenter(UserContract.UserAuthenView userAuthenView, Context context) {
+        this.userAuthenView = userAuthenView;
+        this.context = context;
+    }
 
 
     /**
@@ -228,7 +232,7 @@ public class UserPresenter implements UserContract.UserPresent {
         map.put("no", BaseUrlUtil.NO);
         map.put("random", StringUtil.random());
         map.put("method", BaseUrlUtil.GetVersionInfoMethod);
-        map.put("token", SharedPrefsUtil.getString(context, "token", ""));
+        map.put("token", SPUtils.getString(context, "token"));
         map.put("type", "1");
         String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
         map.put("sign", sign);
@@ -266,4 +270,19 @@ public class UserPresenter implements UserContract.UserPresent {
     }
 
 
+    @Override
+    public void getAuthenData(Map<String, String> map) {
+        OkhttpUtil.okHttpPost(BaseUrlUtil.URL, map, new CallBackUtil.CallBackString() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(context, "网络异常", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(String response) {
+                LogUtil.i(response);
+                userAuthenView.onGetAuthenData(response);
+            }
+        });
+    }
 }

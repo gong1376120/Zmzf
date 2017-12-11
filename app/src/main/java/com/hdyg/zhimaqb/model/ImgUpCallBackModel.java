@@ -47,6 +47,15 @@ public class ImgUpCallBackModel {
          */
 
         private String img_url;
+        private String fileType;
+
+        public String getFileType() {
+            return fileType;
+        }
+
+        public void setFileType(String fileType) {
+            this.fileType = fileType;
+        }
 
         public String getImg_url() {
             return img_url;

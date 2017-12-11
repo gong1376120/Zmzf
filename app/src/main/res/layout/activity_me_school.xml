@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/bg_color"
+              android:background="@color/color_bg"
               android:orientation="vertical">
     <include layout="@layout/top_bar_layout"/>
 
@@ -19,12 +19,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <LinearLayout
                 android:id="@+id/ll_school_image"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="52dp"
                 android:background="@drawable/click_ripple"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -42,7 +42,7 @@
                     android:layout_weight="1"
                     android:text="芝麻付APP操作图文教程"
                     android:textColor="@color/text_color_black"
-                    android:textSize="16sp"/>
+                    android:textSize="16dp"/>
 
                 <ImageView
                     android:layout_width="15dp"
@@ -54,18 +54,18 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="6dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <LinearLayout
                 android:id="@+id/ll_school_video"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="52dp"
                 android:background="@drawable/click_ripple"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -84,7 +84,7 @@
                     android:layout_weight="1"
                     android:text="芝麻付APP使用视频教程"
                     android:textColor="@color/text_color_black"
-                    android:textSize="16sp"/>
+                    android:textSize="16dp"/>
 
                 <ImageView
                     android:layout_width="15dp"
@@ -96,19 +96,19 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="6dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
 
             <LinearLayout
                 android:id="@+id/ll_school_card"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="52dp"
 
                 android:background="@drawable/click_ripple"
                 android:gravity="center"
@@ -127,7 +127,7 @@
                     android:layout_weight="1"
                     android:text="信用卡用卡养卡提额课程"
                     android:textColor="@color/text_color_black"
-                    android:textSize="16sp"/>
+                    android:textSize="16dp"/>
 
                 <ImageView
                     android:layout_width="15dp"
@@ -139,7 +139,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
         </LinearLayout>
     </com.hdyg.zhimaqb.ui.MyScrollView>

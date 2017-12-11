@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.hdyg.zhimaqb.presenter.UserPresenter;
 import com.hdyg.zhimaqb.R;
 import com.hdyg.zhimaqb.util.LogUtil;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.SharedPrefsUtil;
 import com.hdyg.zhimaqb.util.SjApplication;
 import com.hdyg.zhimaqb.util.StringUtil;
@@ -18,27 +19,26 @@ import com.hdyg.zhimaqb.util.StringUtil;
  * 芝麻钱包  启动页
  */
 
-public class WelcomeActivity extends BaseActivity  {
-    private Context context;
-    private String token, bankstatus, real;//银行卡添加状态  实名状态
-    private UserPresenter mPresenter;
-    private String path;//本地logo路径
+public class WelcomeActivity extends BaseActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //activity单例模式
         setContentView(R.layout.activity_welecome_layout);
-        SjApplication.getInstance().addActivity(this);
-        context = WelcomeActivity.this;
+
         //把logo存放到本地 path是本地路径
-        path = StringUtil.saveImageToGallery(context, null, R.mipmap.logo);
-        SharedPrefsUtil.putString(context, "logo_path", path);
 
-        token = SharedPrefsUtil.getString(context, "token", "");
-        LogUtil.i("token" + token);
 
+        String token = SPUtils.getString(this, "token");
+        boolean isFirst = (boolean) SPUtils.get(this, "isFirst", true);
+        LogUtil.i("验证token判断界面--" + token);
         if (TextUtils.isEmpty(token)) {
+            if (isFirst) {
+                SPUtils.put(this, "isFirst", true);
+                String path = StringUtil.saveImageToGallery(this, null, R.mipmap.logo, "zmfLogo.jpg");
+                SharedPrefsUtil.putString(this, "logo_path", path);
+            }
             openActivity(UserLoginActivity.class);
         } else {
             openActivity(MainActivity.class);

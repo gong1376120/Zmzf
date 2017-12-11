@@ -51,7 +51,7 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/bg_color"
+                android:background="@color/color_bg"
                 android:layout_marginTop="10dp">
                 <ImageView
                     android:layout_gravity="center"

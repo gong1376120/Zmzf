@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color">
+    android:background="@color/color_bg">
     <LinearLayout
         android:background="@color/green"
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
             android:layout_width="0dp"
             android:layout_gravity="center"
             android:layout_marginLeft="12dp"
-            android:background="@color/bg_color"
+            android:background="@color/color_bg"
             android:layout_height="30dp">
             <EditText
                 android:id="@+id/search_word_et"

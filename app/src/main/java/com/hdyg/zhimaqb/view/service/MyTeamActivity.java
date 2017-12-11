@@ -67,7 +67,6 @@ public class MyTeamActivity extends BaseActivity implements ServiceContract.MyTe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_team);
         ButterKnife.bind(this);
-        SjApplication.getInstance().addActivity(this);//activity单例模式
         context = MyTeamActivity.this;
         initView();
     }

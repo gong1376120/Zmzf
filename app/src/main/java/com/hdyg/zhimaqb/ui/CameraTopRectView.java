@@ -20,7 +20,7 @@ import com.hdyg.zhimaqb.R;
 import com.hdyg.zhimaqb.util.DisplayUtil;
 
 
-class CameraTopRectView extends View {
+public class CameraTopRectView extends View {
 
     private int panelWidth;
     private int panelHeght;

@@ -25,25 +25,24 @@ import java.io.IOException;
 public class CameraActivity extends BaseActivity {
     private CameraSurfaceView mCameraSurfaceView;
     private ProgressBar progressBar;
-
+    private String path;
+    private String fileType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_camera);
-
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         mCameraSurfaceView = (CameraSurfaceView) findViewById(R.id.cameraSurfaceView);
         Button button = (Button) findViewById(R.id.takePic);
 
-        final String path = getIntent().getStringExtra("path");
+        path = getIntent().getStringExtra("path");
+        fileType = getIntent().getStringExtra("fileType");
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                mCameraSurfaceView.takePicture(path,progressBar);
+                mCameraSurfaceView.takePicture(path, progressBar, fileType);
             }
         });
 

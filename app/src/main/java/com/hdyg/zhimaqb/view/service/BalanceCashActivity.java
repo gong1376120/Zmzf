@@ -66,8 +66,8 @@ public class BalanceCashActivity extends BaseActivity implements ServiceContract
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balance_cash);
-        SjApplication.getInstance().addActivity(this);//activity单例模式
         ButterKnife.bind(this);
+
         context = BalanceCashActivity.this;
         initView();
     }

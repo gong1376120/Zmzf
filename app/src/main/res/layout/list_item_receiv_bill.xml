@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
     <LinearLayout
         android:orientation="vertical"
-        android:background="@color/bg_color"
+        android:background="@color/color_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <!--收款明细-->

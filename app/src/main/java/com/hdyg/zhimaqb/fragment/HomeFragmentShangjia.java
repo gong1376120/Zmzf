@@ -16,10 +16,10 @@ import com.hdyg.zhimaqb.adapter.RecyclerViewHolder;
 import com.hdyg.zhimaqb.model.AppIconModelTest;
 import com.hdyg.zhimaqb.R;
 import com.hdyg.zhimaqb.util.DataUtil;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.SharedPrefsUtil;
 import com.hdyg.zhimaqb.view.service.MyProfitActivity;
 import com.hdyg.zhimaqb.view.service.MyTeamActivity;
-import com.hdyg.zhimaqb.view.service.TuiguangActivity;
 import com.hdyg.zhimaqb.view.ShareH5WebViewActivity;
 
 import java.util.List;
@@ -81,6 +81,7 @@ public class HomeFragmentShangjia extends BaseFragment {
             public int getItemLayoutId(int viewType) {
                 return R.layout.list_item_person;
             }
+
             @Override
             public void bindData(RecyclerViewHolder holder, int position, AppIconModelTest item) {
                 holder.setText(R.id.person_text, item.getApp_name());
@@ -101,11 +102,18 @@ public class HomeFragmentShangjia extends BaseFragment {
                     startActivity(intent);
                 } else if (pos == 2) {
                     // 推广赚钱
-                    intent = new Intent(context, TuiguangActivity.class);
+                    String shareUrl = SPUtils.getString(context, SPUtils.URL_QR_CODE);
+                    String phone = SPUtils.getString(context, "login_name");
+                    intent = new Intent(context, ShareH5WebViewActivity.class);
+                    bundle = new Bundle();
+                    bundle.putString("topContext", "分享推广");
+                    bundle.putString("topRight", "");
+                    bundle.putString("url", shareUrl + shareUrl);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                 } else if (pos == 3) {
                     // 新手
-                    String url = SharedPrefsUtil.getString2(context, "xinshou", "");
+                    String url = SPUtils.getString(context, "xinshou");
                     intent = new Intent(context, ShareH5WebViewActivity.class);
                     bundle = new Bundle();
                     bundle.putString("topContext", "新手指引");

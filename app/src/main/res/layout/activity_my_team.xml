@@ -97,7 +97,7 @@
 
             </LinearLayout>
             <TextView
-                android:background="@color/bg_color"
+                android:background="@color/color_bg"
                 android:textColor="@color/text_color_black"
                 android:gravity="center|left"
                 android:layout_width="match_parent"
@@ -173,7 +173,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/bg_color"/>
+                android:background="@color/color_bg"/>
             <!--2级会员-->
             <LinearLayout
                 android:id="@+id/level2_ll"
@@ -243,7 +243,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/bg_color"/>
+                android:background="@color/color_bg"/>
             <!--3级会员-->
             <LinearLayout
                 android:id="@+id/level3_ll"
@@ -313,7 +313,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/bg_color"/>
+                android:background="@color/color_bg"/>
 
         </LinearLayout>
     </ScrollView>

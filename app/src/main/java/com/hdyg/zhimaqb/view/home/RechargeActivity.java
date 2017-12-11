@@ -33,6 +33,7 @@ import com.hdyg.zhimaqb.util.BaseUrlUtil;
 import com.hdyg.zhimaqb.util.DataUtil;
 import com.hdyg.zhimaqb.util.JsonUtil;
 import com.hdyg.zhimaqb.util.RevealLayout;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.SharedPrefsUtil;
 import com.hdyg.zhimaqb.util.SjApplication;
 import com.hdyg.zhimaqb.util.StringUtil;
@@ -94,8 +95,8 @@ public class RechargeActivity extends BaseActivity implements HomeContract.PayMe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recharge);
-        SjApplication.getInstance().addActivity(this);//activity单例模式
         ButterKnife.bind(this);
+
         context = RechargeActivity.this;
         initView();
     }
@@ -158,7 +159,7 @@ public class RechargeActivity extends BaseActivity implements HomeContract.PayMe
             Map<String, String> map = new HashMap<>();
             map.put("method", "get_upgrade_url1");
             map.put("type", payType);
-            map.put("token", SharedPrefsUtil.getString(context, "token", ""));
+            map.put("token", SPUtils.getString(context, "token"));
             map.put("no", BaseUrlUtil.NO);
             map.put("random", StringUtil.random());
             map.put("level", onLineVIPModel.getLevel());

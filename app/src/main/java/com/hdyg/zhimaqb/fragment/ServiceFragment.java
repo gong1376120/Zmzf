@@ -30,11 +30,10 @@ import com.hdyg.zhimaqb.util.DataUtil;
 import com.hdyg.zhimaqb.util.JsonUtil;
 import com.hdyg.zhimaqb.util.LogUtil;
 import com.hdyg.zhimaqb.util.PopupWindowProgress;
-import com.hdyg.zhimaqb.util.SharedPrefsUtil;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.view.MoreActivity;
 import com.hdyg.zhimaqb.view.service.MyProfitActivity;
 import com.hdyg.zhimaqb.view.service.MyTeamActivity;
-import com.hdyg.zhimaqb.view.service.TuiguangActivity;
 import com.hdyg.zhimaqb.view.ShareH5WebViewActivity;
 import com.hdyg.zhimaqb.view.XinYongCardActivity;
 import com.sivin.Banner;
@@ -71,20 +70,20 @@ public class ServiceFragment extends BaseFragment implements ServiceContract.Ser
     Banner idBanner;
     @BindView(R.id.gv_service_bettom)
     MyGridView gvServiceBettom;
-    //    @BindView(R.id.recycle_service)
-//    RecyclerView recycleService;
+
     private View mView;
     private Context context;
     private Intent intent;
     private Bundle bundle;
     private List<AppIconModelTest> list1;
-    //    private List<AppIconModelTest> list2;
+
     private List<AppIconModelTest> list3;
     private List<BannerCallBcakModel.BannerData.BannerModel> bannerList;
     private ServicePresenter mPresenter;
     private List<IndexAPPIconCallBackModel.Data.AppIconModel> appIconModelList;
     private PopupWindowProgress popupWindowProgress;
     private String isopen;
+    private String share_url;
 
 
     @Override
@@ -99,11 +98,12 @@ public class ServiceFragment extends BaseFragment implements ServiceContract.Ser
     }
 
     private void initView() {
-        isopen = SharedPrefsUtil.getString2(context, "isopen", "0");
-        if (!isopen.equals("1")) {
-            gvServiceTop.setVisibility(View.GONE);
-            gvServiceBettom.setVisibility(View.GONE);
-        }
+        isopen = SPUtils.getString(context, "isopen");
+        share_url = SPUtils.getString(context, "shareregisterurl");
+//        if (!isopen.equals("1")) {
+//            gvServiceTop.setVisibility(View.GONE);
+//            gvServiceBettom.setVisibility(View.GONE);
+//        }
         popupWindowProgress = new PopupWindowProgress(context);
         mPresenter = new ServicePresenter(this, context);
         mPresenter.getBannerData();//获取banner数据
@@ -111,28 +111,9 @@ public class ServiceFragment extends BaseFragment implements ServiceContract.Ser
         topLeftLl.setVisibility(View.INVISIBLE);
         topContext.setText("服务");
         topRightTv.setVisibility(View.INVISIBLE);
-//        StaggeredGridLayoutManager layout = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-//        recycleService.setLayoutManager(layout);
+
+
         initData();
-//        BannerAdapter adapter = new BannerAdapter<BannerTestModel>(bannerList) {
-//            @Override
-//            protected void bindTips(TextView tv, BannerTestModel picModel) {
-//
-//            }
-//
-//            @Override
-//            public void bindImage(ImageView imageView, BannerTestModel picModel) {
-//                imageView.setImageResource(picModel.getPicurl());
-////                Glide.with(HomeFragment.this.getContext())
-////                        .load(picModel.getImg_url())
-////                        .placeholder(R.mipmap.empty)
-////                        .error(R.mipmap.error)
-////                        .into(imageView);
-//            }
-//
-//        };
-//        idBanner.setBannerAdapter(adapter);
-//        idBanner.notifiDataHasChanged();
 
     }
 
@@ -148,7 +129,15 @@ public class ServiceFragment extends BaseFragment implements ServiceContract.Ser
                     intent = new Intent(context, MyTeamActivity.class);
                     startActivity(intent);
                 } else {
-                    intent = new Intent(context, TuiguangActivity.class);
+                    String qr_url = SPUtils.getString(context, SPUtils.URL_QR_CODE);
+                    String phone = SPUtils.getString(context, "login_name");
+
+                    intent = new Intent(context, ShareH5WebViewActivity.class);
+
+                    intent.putExtra("topContext", "分享注册");
+                    intent.putExtra("topRight", "分享");
+                    intent.putExtra("url", qr_url + phone);
+
                     startActivity(intent);
                 }
             }
@@ -160,17 +149,14 @@ public class ServiceFragment extends BaseFragment implements ServiceContract.Ser
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
                 if (pos == 1) {
                     bt2();
-//                    intent = new Intent(context, OnlineUpdateActivity.class);
-//                    bundle = new Bundle();
-//                    bundle.putString("topContext", "会员等级");
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
+
                 } else {
                     String url;
                     if (pos == 0) {
-                        url = SharedPrefsUtil.getString2(context, "xinshou", "");
+                        url = SPUtils.getString(context, SPUtils.URL_QUESTION);
+                        url = "http://" + url;
                     } else {
-                        url = SharedPrefsUtil.getString2(context, "tuiguang", "");
+                        url = SPUtils.getString(context, SPUtils.URL_LAWS);
                     }
                     LogUtil.i(url);
                     if ("".equals(url)) {
@@ -253,6 +239,7 @@ public class ServiceFragment extends BaseFragment implements ServiceContract.Ser
                     @Override
                     protected void bindTips(TextView tv, BannerCallBcakModel.BannerData.BannerModel picModel) {
                     }
+
                     @Override
                     public void bindImage(ImageView imageView, BannerCallBcakModel.BannerData.BannerModel picModel) {
 //                        imageView.setImageResource(picModel.getImg_url());

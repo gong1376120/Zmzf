@@ -43,6 +43,7 @@ import com.hdyg.zhimaqb.ui.PayTypePopupWindow;
 import com.hdyg.zhimaqb.util.BaseUrlUtil;
 import com.hdyg.zhimaqb.util.DataUtil;
 import com.hdyg.zhimaqb.util.JsonUtil;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.SharedPrefsUtil;
 import com.hdyg.zhimaqb.util.SjApplication;
 import com.hdyg.zhimaqb.util.StringUtil;
@@ -155,8 +156,8 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_merchant);
         context = MerchantActivity.this;
-        SjApplication.getInstance().addActivity(this);//activity单例模式
         ButterKnife.bind(this);
+
         initView();
     }
 
@@ -177,8 +178,8 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
         topLeftLl.setOnClickListener(this);
         etMerchantProject.setOnClickListener(this);
 
-        token = SharedPrefsUtil.getString(context, "token", "");
-        phone = SharedPrefsUtil.getString(context, "username", "");
+        token = SPUtils.getString(context, "token");
+        phone = SPUtils.getString(context, "login_name");
         getProject();
     }
 
@@ -208,7 +209,7 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
      */
     public void getProject() {
         Map map = new HashMap();
-        map.put("token", SharedPrefsUtil.getString(context, "token", ""));
+        map.put("token", SPUtils.getString(context, "token"));
         map.put("method", BaseUrlUtil.GetMerchantTypeMethod);
         map.put("random", StringUtil.random());
         String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
@@ -361,7 +362,7 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
     /**
      * 设置拍摄的图片的路径、名称
      */
-    public void setPicUri(){
+    public void setPicUri() {
         // 格式化日期
         String name = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
         // 保存路径
@@ -434,22 +435,22 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
     /**
      * 提交
      */
-    public void send(){
+    public void send() {
         // 提交按钮
         String shortName = merchantNameAbbr.getText().toString();
         String name = merchantName.getText().toString();
         String address = merchantAddress.getText().toString();
         String lawName = merchantLawName.getText().toString();
         String project = etMerchantProject.getText().toString();
-        if ("".equals(shortName) || shortName == null){
+        if ("".equals(shortName) || shortName == null) {
             toastNotifyShort("商户简称不能为空");
-        }else if ("".equals(name) || name == null){
+        } else if ("".equals(name) || name == null) {
             toastNotifyShort("商户名称不能为空");
-        }else if ("".equals(address) || address == null){
+        } else if ("".equals(address) || address == null) {
             toastNotifyShort("商户地址不能为空");
-        }else if ("".equals(lawName) || lawName == null){
+        } else if ("".equals(lawName) || lawName == null) {
             toastNotifyShort("商户注册名称不能为空");
-        } else if ("".equals(project) || project == null){
+        } else if ("".equals(project) || project == null) {
             toastNotifyShort("请选择经营项目类型");
         } else {
             Map<String, String> map = new HashMap<>();
@@ -463,11 +464,11 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
             map.put("merchantType", project);
             map.put("random", StringUtil.random());
             Log.d("cwj", "参数：" + map.toString());
-            String sign = StringUtil.Md5Str(map,BaseUrlUtil.KEY);
+            String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
             map.put("sign", sign);
 
             Log.d("cwj", "商户入驻参数：" + map);
-            if (flagMap.size() == 4){
+            if (flagMap.size() == 4) {
                 OkhttpUtil.okHttpPost(BaseUrlUtil.URL, map, new CallBackUtil.CallBackString() {
                     @Override
                     public void onFailure(Call call, Exception e) {
@@ -481,12 +482,12 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
                             JSONObject temp = new JSONObject(response);
                             int status = temp.getInt("status");
                             String message = temp.getString("message");
-                            if (BaseUrlUtil.STATUS == status){
+                            if (BaseUrlUtil.STATUS == status) {
                                 toastNotifyShort(message);
                                 intent = new Intent();
                                 intent.putExtra("FINISH", true);
                                 setResult(RESULT_CODE, intent);
-                                SharedPrefsUtil.putString(context, "merchant", "3");
+                                SPUtils.put(context, "merchant", "3");
                                 MerchantActivity.this.finish();
                             } else {
                                 toastNotifyShort(message);
@@ -536,22 +537,22 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
      */
     private void setImageBitmapMethod(String fileType, Bitmap bitmap) {
         if (fileType.equals("1033")) {
-            flagMap.put(0,"1033");
+            flagMap.put(0, "1033");
             idcard1Iv.setImageBitmap(bitmap);
             idcard1Pb.setVisibility(View.INVISIBLE);
         }
         if (fileType.equals("1032")) {
-            flagMap.put(1,"1032");
+            flagMap.put(1, "1032");
             idcard2Iv.setImageBitmap(bitmap);
             idcard2Pb.setVisibility(View.INVISIBLE);
         }
         if (fileType.equals("1031")) {
-            flagMap.put(2,"1031");
+            flagMap.put(2, "1031");
             idcard3Iv.setImageBitmap(bitmap);
             idcard3Pb.setVisibility(View.INVISIBLE);
         }
         if (fileType.equals("1034")) {
-            flagMap.put(3,"1034");
+            flagMap.put(3, "1034");
             idcard4Iv.setImageBitmap(bitmap);
             idcard4Pb.setVisibility(View.INVISIBLE);
         }
@@ -559,6 +560,7 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
 
     /**
      * 保存到应用对应的文件路径上
+     *
      * @param context
      * @param albumName
      * @return
@@ -588,10 +590,10 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
                     mPresenter.getImgSendHttpData(map);
                     break;
                 case 2://拍照上传
-                     if (file.exists()){
-                    // 未做压缩处理
+                    if (file.exists()) {
+                        // 未做压缩处理
 //                        mBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                         mBitmap = BitmapFactory.decodeFile(String.valueOf(TakePhotoUtil.compressImage(String.valueOf(file))));
+                        mBitmap = BitmapFactory.decodeFile(String.valueOf(TakePhotoUtil.compressImage(String.valueOf(file))));
                     }
                     // 格式化日期
                     String name = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
@@ -599,7 +601,7 @@ public class MerchantActivity extends BaseActivity implements View.OnClickListen
 //                    srcPath = String.valueOf(TakePhotoUtil.saveImage(context, mBitmap, name + ".png"));
                     path = String.valueOf(TakePhotoUtil.compressImage(String.valueOf(file)));
 
-        //                    path = TakePhotoUtil.getPhotoPathTake(data, IDCardActivity.this);
+                    //                    path = TakePhotoUtil.getPhotoPathTake(data, AuthenticationNameActivity.this);
                     map = TakePhotoUtil.imageUpLoadUtil(token, path, null, fileType);
                     Log.d("czb", "上传照片map===" + map);
                     mPresenter.getImgSendHttpData(map);

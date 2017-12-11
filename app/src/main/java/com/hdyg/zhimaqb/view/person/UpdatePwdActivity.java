@@ -14,6 +14,7 @@ import com.hdyg.zhimaqb.presenter.PersonPresenter;
 import com.hdyg.zhimaqb.R;
 import com.hdyg.zhimaqb.util.BaseUrlUtil;
 import com.hdyg.zhimaqb.util.RevealLayout;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.SharedPrefsUtil;
 import com.hdyg.zhimaqb.util.SjApplication;
 import com.hdyg.zhimaqb.view.BaseActivity;
@@ -49,27 +50,26 @@ public class UpdatePwdActivity extends BaseActivity implements PersonContract.Up
     private Intent intent;
     private PersonPresenter mPresenter;
 
-    private String oldpwd,newpwd,newpwd2;
+    private String oldpwd, newpwd, newpwd2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_pwd);
-        ButterKnife.bind(this);
-        SjApplication.getInstance().addActivity(this);//activity单例模式
         context = UpdatePwdActivity.this;
+        ButterKnife.bind(this);
         initView();
     }
 
-    private void initView(){
+    private void initView() {
         topContext.setText("修改密码");
         topRightLl.setVisibility(View.INVISIBLE);
-        mPresenter =  new PersonPresenter(this,context);
+        mPresenter = new PersonPresenter(this, context);
     }
 
-    @OnClick({R.id.top_left_ll,R.id.update_btn})
-    public void onClick(View v){
-        switch (v.getId()){
+    @OnClick({R.id.top_left_ll, R.id.update_btn})
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.top_left_ll:
                 finish();
                 break;
@@ -78,42 +78,42 @@ public class UpdatePwdActivity extends BaseActivity implements PersonContract.Up
                 oldpwd = oldPwdEt.getText().toString().trim();
                 newpwd = newPwdEt.getText().toString().trim();
                 newpwd2 = newPwdEt2.getText().toString().trim();
-                if (oldpwd == null || oldpwd.length() == 0){
+                if (oldpwd == null || oldpwd.length() == 0) {
                     toastNotifyShort("原密码不能为空");
                     return;
                 }
-                if (newpwd == null || newpwd.length() == 0 || newpwd2 == null || newpwd2.length() == 0){
+                if (newpwd == null || newpwd.length() == 0 || newpwd2 == null || newpwd2.length() == 0) {
                     toastNotifyShort("新密码不能为空");
                     return;
                 }
-                if (!newpwd2.equals(newpwd)){
+                if (!newpwd2.equals(newpwd)) {
                     toastNotifyShort("输入的密码不相等");
                     return;
                 }
-                mPresenter.getUpDatePwdData(oldpwd,newpwd);
+                mPresenter.getUpDatePwdData(oldpwd, newpwd);
                 break;
         }
     }
 
     @Override
     public void onGetUpDatePwdData(String str) {
-        Log.d("czb","修改密码回调数据=="+str);
+        Log.d("czb", "修改密码回调数据==" + str);
         try {
             JSONObject temp = new JSONObject(str);
             int status = temp.getInt("status");
             String message = temp.getString("message");
-            if (status == BaseUrlUtil.STATUS){
+            if (status == BaseUrlUtil.STATUS) {
                 toastNotifyShort(message);
                 intent = new Intent(context, UserLoginActivity.class);
                 startActivity(intent);
-                SharedPrefsUtil.putString(context,"userpwd",newpwd);
+                SPUtils.put(context, "userpwd", newpwd);
                 finish();
-            }else {
+            } else {
                 toastNotifyShort(message);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             toastNotifyShort("修改密码失败");
-            Log.d("czb","修改密码回调数据异常=="+e.toString());
+            Log.d("czb", "修改密码回调数据异常==" + e.toString());
         }
     }
 }

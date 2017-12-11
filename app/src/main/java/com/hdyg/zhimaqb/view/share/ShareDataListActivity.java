@@ -20,6 +20,7 @@ import com.hdyg.zhimaqb.ui.MyItemDecoration;
 import com.hdyg.zhimaqb.util.BaseUrlUtil;
 import com.hdyg.zhimaqb.util.JsonUtil;
 import com.hdyg.zhimaqb.util.LogUtil;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.SharedPrefsUtil;
 import com.hdyg.zhimaqb.util.SjApplication;
 import com.hdyg.zhimaqb.util.StringUtil;
@@ -61,9 +62,7 @@ public class ShareDataListActivity extends BaseActivity implements ShareContract
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_data_list);
-        SjApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
-
         initView();
 
     }
@@ -87,7 +86,7 @@ public class ShareDataListActivity extends BaseActivity implements ShareContract
             public void bindData(RecyclerViewHolder holder, int position, ShareListModel.DataBean item) {
                 holder.setText(R.id.tv_title, item.getCampaign_title());
                 holder.setText(R.id.tv_intro, item.getCampaign_content());
-                holder.setCirImageView(R.id.civ_img,item.getCampaign_img());
+                holder.setCirImageView(R.id.civ_img, item.getCampaign_img());
             }
         };
 
@@ -111,7 +110,7 @@ public class ShareDataListActivity extends BaseActivity implements ShareContract
 
 
         Map<String, String> map = new HashMap<>();
-        map.put("token", SharedPrefsUtil.getString(ShareDataListActivity.this, "token", ""));
+        map.put("token", SPUtils.getString(ShareDataListActivity.this, "token"));
         map.put("method", "campaign");
         mSharePresenter.getShareListData(map);
     }
@@ -123,8 +122,10 @@ public class ShareDataListActivity extends BaseActivity implements ShareContract
 
     @Override
     public void onGetShareListData(String str) {
+        LogUtil.i(str);
         ShareListModel shareListModel = JsonUtil.parseJsonWithGson(str, ShareListModel.class);
         if (shareListModel.getStatus() == 1) {
+
             mDataBeanList.clear();
             mDataBeanList.addAll(shareListModel.getData());
             adapterData.notifyDataSetChanged();

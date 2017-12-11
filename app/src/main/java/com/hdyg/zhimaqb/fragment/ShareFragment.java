@@ -43,8 +43,7 @@ public class ShareFragment extends Fragment {
     LinearLayout serRegist;//分享注册
     @BindView(R.id.ser_f2f)
     LinearLayout serF2f;//面对面注册
-    // @BindView(R.id.ser_data)
-    LinearLayout serData;//面对面注册
+
     @BindView(R.id.main)
     LinearLayout main;
     @BindView(R.id.ser_data)
@@ -53,33 +52,31 @@ public class ShareFragment extends Fragment {
 
     private Context context;
     private Intent intent;
-    private Bundle bundle;
     private String share_url;
     private String qr_url;
     private String phone;
 
 
     public ShareFragment() {
-        // Required empty public constructor
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_share, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         context = getActivity();
         qr_url = SPUtils.getString(context, SPUtils.URL_QR_CODE);
 
-        share_url = SharedPrefsUtil.getString(context, "shareregisterurl", null);
-        phone = SharedPrefsUtil.getString(context, "login_name", "");
+        share_url = SPUtils.getString(context, "shareregisterurl");
+        phone = SPUtils.getString(context, "login_name");
 
-
-        topRightLl.setVisibility(View.GONE);
-        topLeftLl.setVisibility(View.GONE);
+        topRightLl.setVisibility(View.INVISIBLE);
+        topLeftLl.setVisibility(View.INVISIBLE);
         topContext.setText("分享");
 
 
@@ -97,24 +94,11 @@ public class ShareFragment extends Fragment {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ser_qrcode:
-                //分享二维码
-//                if (share_url != null){
-//                    Bitmap bitmap = StringUtil.generateQRCodeBitmap(share_url, 180, 180);//生成二维码
-//                    intent = new Intent(context,ShareQRCodeActivity.class);
-//                    bundle = new Bundle();
-//                    bundle.putParcelable("bitmap", bitmap);//传递bitmap
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
-//                }else {
-//                    toastNotifyShort("分享链接为空");
-//                }
                 if (qr_url != null) {
                     intent = new Intent(context, ShareH5WebViewActivity.class);
-                    bundle = new Bundle();
-                    bundle.putString("topContext", "分享二维码");
-                    bundle.putString("topRight", "分享");
-                    bundle.putString("url", qr_url + phone);
-                    intent.putExtras(bundle);
+                    intent.putExtra("topContext", "分享二维码");
+                    intent.putExtra("topRight", "分享");
+                    intent.putExtra("url", qr_url + phone);
                     startActivity(intent);
                 } else {
                     Toast.makeText(context, "分享链接为空", Toast.LENGTH_SHORT).show();
@@ -124,11 +108,9 @@ public class ShareFragment extends Fragment {
                 //分享注册
                 if (share_url != null) {
                     intent = new Intent(context, ShareH5WebViewActivity.class);
-                    bundle = new Bundle();
-                    bundle.putString("topContext", "分享注册");
-                    bundle.putString("topRight", "分享");
-                    bundle.putString("url", share_url);
-                    intent.putExtras(bundle);
+                    intent.putExtra("topContext", "分享注册");
+                    intent.putExtra("topRight", "分享");
+                    intent.putExtra("url", share_url);
                     startActivity(intent);
                 } else {
                     Toast.makeText(context, "分享链接为空", Toast.LENGTH_SHORT).show();
@@ -137,9 +119,7 @@ public class ShareFragment extends Fragment {
             case R.id.ser_f2f:
                 //面对面
                 intent = new Intent(context, UserRegistActivity.class);
-                bundle = new Bundle();
-                bundle.putString("topContext", "面对面开通");
-                intent.putExtras(bundle);
+                intent.putExtra("topContext", "面对面开通");
                 startActivity(intent);
                 break;
             case R.id.ser_data:

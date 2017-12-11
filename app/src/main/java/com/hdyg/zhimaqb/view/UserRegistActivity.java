@@ -17,6 +17,7 @@ import com.hdyg.zhimaqb.R;
 import com.hdyg.zhimaqb.util.BaseUrlUtil;
 import com.hdyg.zhimaqb.util.MD5.Md5Encrypt;
 import com.hdyg.zhimaqb.util.PopupWindowProgress;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.SharedPrefsUtil;
 import com.hdyg.zhimaqb.util.SjApplication;
 import com.hdyg.zhimaqb.util.StringUtil;
@@ -77,7 +78,6 @@ public class UserRegistActivity extends BaseActivity implements UserContract.Use
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_regist);
-        SjApplication.getInstance().addActivity(this);//activity单例模式
         ButterKnife.bind(this);
         context = UserRegistActivity.this;
         initView();
@@ -93,12 +93,12 @@ public class UserRegistActivity extends BaseActivity implements UserContract.Use
         if (topContext.equals("注册")) {
             registPhone.setHint("输入手机号");
             registBtn.setText("完成注册");
-        } else if (topContext.equals("忘记密码")){
+        } else if (topContext.equals("忘记密码")) {
             registPhone.setHint("输入注册手机号");
             registBtn.setText("重置密码");
             agreeRegistLl.setVisibility(View.INVISIBLE);
             inviteLl.setVisibility(View.GONE);
-        }else {
+        } else {
             registPhone.setHint("输入手机号");
             registPwd2.setHint("确认新密码");
             registBtn.setText("直接注册");
@@ -144,13 +144,13 @@ public class UserRegistActivity extends BaseActivity implements UserContract.Use
                     String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
                     map.put("sign", sign);
                     mPresenter.getRegistSendMsgData(map);//获取发送验证码数据
-                } else if (topContext.equals("忘记密码")){
+                } else if (topContext.equals("忘记密码")) {
                     //忘记密码
                     map.put("method", BaseUrlUtil.ForgetPwdSendMsgMethod);
                     String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
                     map.put("sign", sign);
                     mPresenter.getForgetPwdSendMsgData(map);//获取发送验证码数据
-                }else {
+                } else {
                     //面对面注册
                 }
                 break;
@@ -179,7 +179,7 @@ public class UserRegistActivity extends BaseActivity implements UserContract.Use
                     toastNotifyShort("验证码不能为空");
                     return;
                 }
-                if (userPWD == null || userPWD.length() == 0 || !userPWD.matches(BaseUrlUtil.passwordReg)){
+                if (userPWD == null || userPWD.length() == 0 || !userPWD.matches(BaseUrlUtil.passwordReg)) {
                     toastNotifyShort("密码格式不对");
                     return;
                 }
@@ -248,8 +248,9 @@ public class UserRegistActivity extends BaseActivity implements UserContract.Use
                 toastNotifyShort(message);
                 Intent intent = new Intent(context, UserLoginActivity.class);
                 startActivity(intent);
-                SharedPrefsUtil.putString(context, "username", userPhone);
-                SharedPrefsUtil.putString(context, "userpwd", userPWD);
+
+                SPUtils.put(context, "login_name", userPhone);
+                SPUtils.put(context, "userpwd", userPWD);
             }
 
         } catch (JSONException e) {
@@ -284,8 +285,8 @@ public class UserRegistActivity extends BaseActivity implements UserContract.Use
                 toastNotifyShort(message);
                 Intent intent = new Intent(context, UserLoginActivity.class);
                 startActivity(intent);
-                SharedPrefsUtil.putString(context, "username", userPhone);
-                SharedPrefsUtil.putString(context, "userpwd", userPWD);
+                SPUtils.put(context, "login_name", userPhone);
+                SPUtils.put(context, "userpwd", userPWD);
             }
 
         } catch (JSONException e) {

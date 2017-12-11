@@ -2,6 +2,7 @@ package com.hdyg.zhimaqb.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.hdyg.zhimaqb.R;
 import com.hdyg.zhimaqb.ui.CircleImageView;
 import com.hdyg.zhimaqb.util.LogUtil;
@@ -128,6 +132,12 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
+    public RecyclerViewHolder setHtmlText(int viewId, String value) {
+        TextView view = findViewById(viewId);
+        view.setText(Html.fromHtml(value));
+        return this;
+    }
+
     public RecyclerViewHolder setTextColor(int viewId, int value) {
         TextView view = findViewById(viewId);
         view.setTextColor(value);
@@ -141,15 +151,21 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
     }
 
     public RecyclerViewHolder setCirImageView(int viewId, String url) {
-        CircleImageView view = findViewById(viewId);
-        //加载图片
-        LogUtil.i("url"+url);
 
+        final CircleImageView view = findViewById(viewId);
+        //加载图片
+        LogUtil.i("url" + url);
         Glide.with(mContext)
                 .load(url)
+                .skipMemoryCache(true)
                 .placeholder(R.mipmap.empty)
                 .error(R.mipmap.error)
-                .into(view);
+                .into(new SimpleTarget<GlideDrawable>() {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        view.setImageDrawable(resource);
+                    }
+                });
 
         return this;
     }

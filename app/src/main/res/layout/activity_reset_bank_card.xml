@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/bg_color"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_bg"
+              android:orientation="vertical">
 
-    <include layout="@layout/personal_top_layout"/>
+    <include layout="@layout/top_bar_layout"/>
 
-    <android.support.v4.widget.NestedScrollView
+    <com.hdyg.zhimaqb.ui.MyScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="44dp">
+                android:layout_height="44dp"
+                android:gravity="center_vertical">
+
                 <TextView
-                    android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:text="* 银行卡信息（必填）"
                     android:textSize="16dp"/>
             </LinearLayout>
@@ -34,198 +37,217 @@
                 android:orientation="vertical">
                 <!--卡号-->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
                     <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
                         <LinearLayout
-                            android:gravity="center_vertical"
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_height="match_parent">
+                            android:gravity="center_vertical">
+
                             <LinearLayout
                                 android:layout_width="1dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="卡号"
-                                android:textSize="16dp"
-                                android:textColor="@color/text_color_black"/>
+                                android:textColor="@color/text_color_black"
+                                android:textSize="16dp"/>
                         </LinearLayout>
 
                         <EditText
                             android:id="@+id/et_card_no"
-                            android:layout_marginLeft="20dp"
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dp"
                             android:layout_weight="3"
+                            android:background="@null"
                             android:hint="请填写银行卡账号"
-                            android:textSize="14dp"
                             android:inputType="phone"
                             android:maxLength="19"
                             android:textColorHint="@color/gray"
-                            android:layout_height="match_parent"
-                            android:background="@null"/>
+                            android:textSize="14dp"/>
                     </LinearLayout>
                 </LinearLayout>
                 <!--分割线-->
                 <LinearLayout
-                    android:layout_marginLeft="20dp"
-                    android:background="@color/bg_color"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/color_bg"/>
                 <!--所属银行-->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
                     <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
                         <LinearLayout
-                            android:gravity="center_vertical"
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_height="match_parent">
+                            android:gravity="center_vertical">
+
                             <LinearLayout
                                 android:layout_width="1dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="所属银行"
-                                android:textSize="16dp"
-                                android:textColor="@color/text_color_black"/>
+                                android:textColor="@color/text_color_black"
+                                android:textSize="16dp"/>
                         </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/ll_bank_name"
                             android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3">
+
                             <TextView
                                 android:id="@+id/et_bank_name"
-                                android:layout_marginLeft="20dp"
-                                android:hint="请选择银行"
-                                android:textSize="14dp"
-                                android:textColorHint="@color/gray"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@null"/>
+                                android:layout_marginLeft="20dp"
+                                android:background="@null"
+                                android:hint="请选择银行"
+                                android:textColorHint="@color/gray"
+                                android:textSize="14dp"/>
 
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
                 <!--分割线-->
                 <LinearLayout
-                    android:layout_marginLeft="20dp"
-                    android:background="@color/bg_color"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/color_bg"/>
                 <!--地区-->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
                     <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
                         <LinearLayout
-                            android:gravity="center_vertical"
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_height="match_parent">
+                            android:gravity="center_vertical">
+
                             <LinearLayout
                                 android:layout_width="1dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="地区"
-                                android:textSize="16dp"
-                                android:textColor="@color/text_color_black"/>
+                                android:textColor="@color/text_color_black"
+                                android:textSize="16dp"/>
                         </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/ll_bank_addr"
                             android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3">
+
                             <TextView
                                 android:id="@+id/et_bank_addr"
-                                android:layout_marginLeft="20dp"
                                 android:layout_width="match_parent"
-                                android:hint="请选择地区"
-                                android:textSize="14dp"
-                                android:textColorHint="@color/gray"
                                 android:layout_height="match_parent"
-                                android:background="@null"/>
+                                android:layout_marginLeft="20dp"
+                                android:background="@null"
+                                android:hint="请选择地区"
+                                android:textColorHint="@color/gray"
+                                android:textSize="14dp"/>
                         </LinearLayout>
 
                     </LinearLayout>
                 </LinearLayout>
                 <!--分割线-->
                 <LinearLayout
-                    android:layout_marginLeft="20dp"
-                    android:background="@color/bg_color"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/color_bg"/>
                 <!--开户行-->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
                     <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
                         <LinearLayout
-                            android:gravity="center_vertical"
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_height="match_parent">
+                            android:gravity="center_vertical">
+
                             <LinearLayout
                                 android:layout_width="1dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="开户行"
-                                android:textSize="16dp"
-                                android:textColor="@color/text_color_black"/>
+                                android:textColor="@color/text_color_black"
+                                android:textSize="16dp"/>
                         </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/ll_bank_deposit"
                             android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3">
+
                             <TextView
                                 android:id="@+id/et_bank_deposit"
-                                android:layout_marginLeft="20dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:layout_marginLeft="20dp"
+                                android:background="@null"
                                 android:hint="请选择开户行"
-                                android:textSize="14dp"
                                 android:textColorHint="@color/gray"
-                                android:background="@null"/>
+                                android:textSize="14dp"/>
                         </LinearLayout>
                     </LinearLayout>
 
@@ -235,19 +257,21 @@
 
             <!--下部-->
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical">
+
                 <TextView
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:text="* 请填写持卡人信息（必填），银行账户将默认成为您的提现账户"/>
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="* 请填写持卡人信息（必填），银行账户将默认成为您的提现账户"
+                    android:textSize="16dp"/>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -255,170 +279,186 @@
                 android:orientation="vertical">
                 <!--持卡人-->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
                     <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
                         <LinearLayout
-                            android:gravity="center_vertical"
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_height="match_parent">
+                            android:gravity="center_vertical">
+
                             <LinearLayout
                                 android:layout_width="1dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="持卡人"
-                                android:textSize="16dp"
-                                android:textColor="@color/text_color_black"/>
+                                android:textColor="@color/text_color_black"
+                                android:textSize="16dp"/>
                         </LinearLayout>
 
                         <EditText
                             android:id="@+id/et_idcard_name"
-                            android:layout_marginLeft="20dp"
                             android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:hint="请填写持卡人姓名"
-                            android:textSize="14dp"
-                            android:textColorHint="@color/gray"
                             android:layout_height="match_parent"
-                            android:background="@null"/>
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="3"
+                            android:background="@null"
+                            android:hint="请填写持卡人姓名"
+                            android:textColorHint="@color/gray"
+                            android:textSize="14dp"/>
                     </LinearLayout>
                 </LinearLayout>
                 <!--分割线-->
                 <LinearLayout
-                    android:layout_marginLeft="20dp"
-                    android:background="@color/bg_color"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/color_bg"/>
                 <!--身份证-->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
                     <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
                         <LinearLayout
-                            android:gravity="center_vertical"
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_height="match_parent">
+                            android:gravity="center_vertical">
+
                             <LinearLayout
                                 android:layout_width="1dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="身份证"
-                                android:textSize="16dp"
-                                android:textColor="@color/text_color_black"/>
+                                android:textColor="@color/text_color_black"
+                                android:textSize="16dp"/>
                         </LinearLayout>
 
                         <EditText
                             android:id="@+id/et_idcard_no"
-                            android:layout_marginLeft="20dp"
                             android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:hint="请填写身份证号码"
-                            android:textSize="14dp"
-                            android:textColorHint="@color/gray"
                             android:layout_height="match_parent"
-                            android:background="@null"/>
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="3"
+                            android:background="@null"
+                            android:hint="请填写身份证号码"
+                            android:textColorHint="@color/gray"
+                            android:textSize="14dp"/>
                     </LinearLayout>
                 </LinearLayout>
                 <!--分割线-->
                 <LinearLayout
-                    android:layout_marginLeft="20dp"
-                    android:background="@color/bg_color"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/color_bg"/>
                 <!--手机号码-->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
                     <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
                         <LinearLayout
-                            android:gravity="center_vertical"
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_height="match_parent">
+                            android:gravity="center_vertical">
+
                             <LinearLayout
                                 android:layout_width="1dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="手机号"
-                                android:textSize="16dp"
-                                android:textColor="@color/text_color_black"/>
+                                android:textColor="@color/text_color_black"
+                                android:textSize="16dp"/>
                         </LinearLayout>
 
                         <EditText
                             android:id="@+id/et_phone"
-                            android:layout_marginLeft="20dp"
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dp"
                             android:layout_weight="3"
+                            android:background="@null"
                             android:hint="请填写银行预留手机号"
-                            android:textSize="14dp"
                             android:inputType="phone"
                             android:maxLength="11"
                             android:textColorHint="@color/gray"
-                            android:layout_height="match_parent"
-                            android:background="@null"/>
+                            android:textSize="14dp"/>
                     </LinearLayout>
                 </LinearLayout>
                 <!--分割线-->
                 <LinearLayout
-                    android:layout_marginLeft="20dp"
-                    android:background="@color/bg_color"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/color_bg"/>
                 <!--验证码-->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
                     <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
                         <LinearLayout
-                            android:gravity="center_vertical"
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_height="match_parent">
+                            android:gravity="center_vertical">
+
                             <LinearLayout
                                 android:layout_width="1dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="验证码"
-                                android:textSize="16dp"
-                                android:textColor="@color/text_color_black"/>
+                                android:textColor="@color/text_color_black"
+                                android:textSize="16dp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -428,24 +468,26 @@
                             android:layout_marginLeft="20dp"
                             android:layout_weight="3"
                             android:orientation="horizontal">
+
                             <EditText
                                 android:id="@+id/et_phone_code"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@null"
                                 android:hint="请填写验证码"
                                 android:inputType="phone"
-                                android:textSize="14dp"
                                 android:textColorHint="@color/gray"
-                                android:background="@null"/>
+                                android:textSize="14dp"/>
+
                             <Button
                                 android:id="@+id/btn_phone_code"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_marginRight="10dp"
                                 android:background="@drawable/btn_shape_green"
-                                android:text="获取验证码"
                                 android:inputType="phone"
+                                android:text="获取验证码"
                                 android:textColor="@color/white"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -454,21 +496,20 @@
 
             <Button
                 android:id="@+id/btn_confirm"
-                android:layout_margin="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/btn_shape_green"
                 android:text="确   认"
-                android:textSize="18dp"
                 android:textColor="@color/white"
-                android:background="@drawable/btn_shape_green"/>
+                android:textSize="18dp"/>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"/>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-
+    </com.hdyg.zhimaqb.ui.MyScrollView>
 
 
 </LinearLayout>

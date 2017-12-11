@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="6dp"
-        android:background="@color/color_line_gray"/>
+        android:background="@color/color_line"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:gravity="center|left"
             android:text="注册账号"
             android:textColor="@color/text_color_black"
-            android:textSize="16sp"/>
+            android:textSize="16dp"/>
 
         <TextView
             android:id="@+id/userphone"
@@ -45,13 +45,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_line_gray"/>
+        android:background="@color/color_line"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
-        android:background="@color/color_line_gray"/>
+        android:background="@color/color_line"/>
 
     <LinearLayout
         android:id="@+id/bankcard_ll"
@@ -70,7 +70,7 @@
             android:gravity="center|left"
             android:text="结算卡绑定"
             android:textColor="@color/text_color_black"
-            android:textSize="16sp"/>
+            android:textSize="16dp"/>
 
         <TextView
             android:id="@+id/card_bangding"
@@ -91,7 +91,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_line_gray"/>
+        android:background="@color/color_line"/>
 
     <LinearLayout
         android:id="@+id/real_ll"
@@ -110,7 +110,7 @@
             android:gravity="center|left"
             android:text="实名认证"
             android:textColor="@color/text_color_black"
-            android:textSize="16sp"/>
+            android:textSize="16dp"/>
 
         <TextView
             android:id="@+id/name_bangding"
@@ -131,7 +131,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_line_gray"/>
+        android:background="@color/color_line"/>
 
     <LinearLayout
         android:id="@+id/shanghu_ll"
@@ -149,7 +149,7 @@
             android:gravity="center|left"
             android:text="商户入驻"
             android:textColor="@color/text_color_black"
-            android:textSize="16sp"/>
+            android:textSize="16dp"/>
 
         <TextView
             android:id="@+id/name_shanghu"
@@ -170,7 +170,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_line_gray"/>
+        android:background="@color/color_line"/>
     <!--提现账户-->
     <LinearLayout
         android:id="@+id/ll_withdrawals_card"

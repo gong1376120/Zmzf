@@ -3,7 +3,7 @@
               android:id="@+id/main"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/bg_color"
+              android:background="@color/color_bg"
               android:orientation="vertical">
 
 
@@ -23,12 +23,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <LinearLayout
                 android:id="@+id/ser_qrcode"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:background="@drawable/click_ripple"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -46,7 +46,7 @@
                     android:layout_weight="1"
                     android:text="分享二维码图片链接"
                     android:textColor="@color/text_color_black"
-                    android:textSize="16sp"/>
+                    android:textSize="16dp"/>
 
                 <ImageView
                     android:layout_width="15dp"
@@ -58,18 +58,18 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="6dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <LinearLayout
                 android:id="@+id/ser_regist"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:background="@drawable/click_ripple"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -88,7 +88,7 @@
                     android:layout_weight="1"
                     android:text="分享注册页面链接"
                     android:textColor="@color/text_color_black"
-                    android:textSize="16sp"/>
+                    android:textSize="16dp"/>
 
                 <ImageView
                     android:layout_width="15dp"
@@ -100,18 +100,18 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="6dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <LinearLayout
                 android:id="@+id/ser_f2f"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:background="@drawable/click_ripple"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -129,7 +129,7 @@
                     android:layout_weight="1"
                     android:text="面对面开通账号"
                     android:textColor="@color/text_color_black"
-                    android:textSize="16sp"/>
+                    android:textSize="16dp"/>
 
                 <ImageView
                     android:layout_width="15dp"
@@ -141,19 +141,18 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="6dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <LinearLayout
                 android:id="@+id/ser_data"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-
+                android:layout_height="55dp"
                 android:background="@drawable/click_ripple"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -171,7 +170,7 @@
                     android:layout_weight="1"
                     android:text="分享芝麻付宣传资料给好友"
                     android:textColor="@color/text_color_black"
-                    android:textSize="16sp"/>
+                    android:textSize="16dp"/>
 
                 <ImageView
                     android:layout_width="15dp"
@@ -183,7 +182,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
         </LinearLayout>
     </com.hdyg.zhimaqb.ui.MyScrollView>

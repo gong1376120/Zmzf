@@ -1,5 +1,7 @@
 package com.hdyg.zhimaqb.model;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/7/28.
  */
@@ -33,7 +35,7 @@ public class CommonURLCallBackModel {
         this.data = data;
     }
 
-    public class CommonURLModel{
+    public class CommonURLModel {
         private String random;
         private String aboutus;//关于我们
         private String laws;//法律条款
@@ -46,6 +48,7 @@ public class CommonURLCallBackModel {
         private String tradingrules;//交易规则
         private String isopen;//模块显示或隐藏  1->显示   其他->隐藏
         private String qrCode;// 二维码
+        private List<CommonURLModel.MsgBean> msg;
 
         public String getQrCode() {
             return qrCode;
@@ -141,6 +144,40 @@ public class CommonURLCallBackModel {
 
         public void setTradingrules(String tradingrules) {
             this.tradingrules = tradingrules;
+        }
+
+        public List<CommonURLModel.MsgBean> getMsg() {
+            return msg;
+        }
+
+        public void setMsg(List<CommonURLModel.MsgBean> msg) {
+            this.msg = msg;
+        }
+
+        public class MsgBean {
+            /**
+             * title : 新系统消息
+             * content : 系统近期即将更新
+             */
+
+            private String title;
+            private String content;
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getContent() {
+                return content;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
+            }
         }
     }
 }

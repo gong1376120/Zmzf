@@ -5,27 +5,29 @@
     android:layout_height="match_parent"
     android:background="@color/color_bg"
     android:orientation="vertical">
+
     <include layout="@layout/top_bar_layout"/>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/color_line_gray"/>
-
     <com.hdyg.zhimaqb.ui.MyScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/color_line"/>
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="95dp"
+                android:layout_height="85dp"
                 android:background="@color/color_white">
 
                 <com.hdyg.zhimaqb.ui.CircleImageView
@@ -49,7 +51,7 @@
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="测试"
+                        android:text="芝麻等级"
                         android:textColor="@color/text_color_black"
                         android:textSize="18dp"
                         />
@@ -61,8 +63,9 @@
                         android:layout_alignBottom="@+id/tv_name"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/tv_name"
-                        android:text="测试等级"
+                        android:text="芝麻付"
                         android:textColor="@color/text_color_black"
+                        android:textSize="14dp"
                         />
 
                     <TextView
@@ -82,13 +85,13 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="6dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
 
             <LinearLayout
@@ -161,13 +164,47 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="6dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_referee"
+                style="@style/ItemLayout"
+                >
+
+                <ImageView
+                    style="@style/ItemImageView"
+                    android:src="@mipmap/me_tuijianren"
+                    />
+
+                <TextView
+                    style="@style/ItemTextView"
+                    android:text="推荐人"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_referee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="22dp"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="14dp"
+                    />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_line"/>
 
             <RelativeLayout
                 android:id="@+id/rl_authentication"
@@ -185,6 +222,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/tv_id_authen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -202,7 +240,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <RelativeLayout
                 android:id="@+id/rl_card"
@@ -219,6 +257,7 @@
                     android:text="我的银行卡"/>
 
                 <TextView
+                    android:id="@+id/tv_card_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -236,11 +275,12 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <RelativeLayout
                 android:id="@+id/rl_rate"
                 style="@style/ItemLayout"
+                android:visibility="gone"
                 >
 
                 <ImageView
@@ -261,7 +301,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:id="@+id/rl_tel_service"
@@ -275,7 +316,7 @@
 
                 <TextView
                     style="@style/ItemTextView"
-                    android:text="客服说明"
+                    android:text="我的客服"
                     />
 
 
@@ -286,7 +327,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <RelativeLayout
                 android:id="@+id/rl_about_us"
@@ -311,7 +352,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <RelativeLayout
                 android:id="@+id/rl_suggest"
@@ -337,7 +378,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/color_line_gray"/>
+                android:background="@color/color_line"/>
 
             <RelativeLayout
                 android:id="@+id/rl_setting"

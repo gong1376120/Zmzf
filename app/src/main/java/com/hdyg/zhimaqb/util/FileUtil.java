@@ -15,20 +15,13 @@ public class FileUtil {
     public final static String ID_BEHIND = "idBehind.jpg";
     public final static String CARD_FRONT = "cardFront.jpg";
     public final static String CARD_BEHIND = "cardBehind.jpg";
+    public final static String ID_CARD = "idCard.jpg";
 
     public static String getFilePath(String fileName) {
         String filePath = PATH + fileName;
         File file = new File(PATH);
         if (!file.exists()) {
             file.mkdirs();
-        }
-        file = new File(filePath);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return filePath;
     }

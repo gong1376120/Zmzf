@@ -83,8 +83,8 @@ public class BillActivity extends BaseActivity implements HomeContract.BillView 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill);
-        SjApplication.getInstance().addActivity(this);//activity单例模式
         ButterKnife.bind(this);
+
         context = BillActivity.this;
         initView();
     }

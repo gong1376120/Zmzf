@@ -36,7 +36,7 @@ public class PayMethodCallBackModel {
         this.data = data;
     }
 
-    public class PayMethodData{
+    public class PayMethodData {
         private String random;
         private List<PayMethodModel> channel;
         private int count;
@@ -65,7 +65,7 @@ public class PayMethodCallBackModel {
             this.count = count;
         }
 
-        public class PayMethodModel{
+        public class PayMethodModel {
             private String id;//
             private String pay_id;//平台ID
             private String pay_name;//支付名称
@@ -78,6 +78,7 @@ public class PayMethodCallBackModel {
             private String start_time;//开发充值时间
             private String end_time;//截止充值时间
             private String status;//状态 1开启 0关闭;
+            private String add_fee;
 
             public String getId() {
                 return id;
@@ -173,6 +174,14 @@ public class PayMethodCallBackModel {
 
             public void setStatus(String status) {
                 this.status = status;
+            }
+
+            public String getAdd_fee() {
+                return add_fee;
+            }
+
+            public void setAdd_fee(String add_fee) {
+                this.add_fee = add_fee;
             }
         }
     }

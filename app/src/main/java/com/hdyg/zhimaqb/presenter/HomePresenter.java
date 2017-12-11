@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.hdyg.zhimaqb.util.BaseUrlUtil;
-import com.hdyg.zhimaqb.util.SharedPrefsUtil;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.StringUtil;
 import com.hdyg.zhimaqb.util.okhttp.CallBackUtil;
 import com.hdyg.zhimaqb.util.okhttp.OkhttpUtil;
@@ -59,7 +59,7 @@ public class HomePresenter implements HomeContract.HomePresent {
         map.put("method",BaseUrlUtil.GetBankDataMethod);
         map.put("no",BaseUrlUtil.NO);
         map.put("random",StringUtil.random());
-        map.put("token",SharedPrefsUtil.getString(context,"token",null));
+        map.put("token",SPUtils.getString(context,"token"));
         String sign = StringUtil.Md5Str(map,BaseUrlUtil.KEY);
         map.put("sign",sign);
         OkhttpUtil.okHttpPost(BaseUrlUtil.URL, map, new CallBackUtil.CallBackString() {
@@ -102,7 +102,7 @@ public class HomePresenter implements HomeContract.HomePresent {
     public void getSysTemInfoData(int page,int size) {
         Map<String, String> map = new HashMap<>();
         map.put("no", BaseUrlUtil.NO);
-        map.put("token", SharedPrefsUtil.getString(context, "token", null));
+        map.put("token", SPUtils.getString(context, "token"));
         map.put("random", StringUtil.random());
         map.put("method", "get_msg_type_list");
         final String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
@@ -150,7 +150,7 @@ public class HomePresenter implements HomeContract.HomePresent {
         map.put("bankname",bankname);
         map.put("bankcode",bankcode);
         map.put("no",BaseUrlUtil.NO);
-        map.put("token",SharedPrefsUtil.getString(context,"token",null));
+        map.put("token",SPUtils.getString(context,"token"));
         map.put("random",StringUtil.random());
         map.put("method",BaseUrlUtil.AddCardBankDataMethod);
         String sign = StringUtil.Md5Str(map,BaseUrlUtil.KEY);
@@ -240,7 +240,7 @@ public class HomePresenter implements HomeContract.HomePresent {
         map.put("no",BaseUrlUtil.NO);
         map.put("random",StringUtil.random());
         map.put("method",BaseUrlUtil.GetBillDataMethod);
-        map.put("token",SharedPrefsUtil.getString(context,"token",null));
+        map.put("token",SPUtils.getString(context,"token"));
         String sign = StringUtil.Md5Str(map,BaseUrlUtil.KEY);
         map.put("sign",sign);
         OkhttpUtil.okHttpPost(BaseUrlUtil.URL, map, new CallBackUtil.CallBackString() {
@@ -270,7 +270,7 @@ public class HomePresenter implements HomeContract.HomePresent {
         map.put("no",BaseUrlUtil.NO);
         map.put("random",StringUtil.random());
         map.put("method",BaseUrlUtil.GetBalanceDetailDataMethod);
-        map.put("token",SharedPrefsUtil.getString(context,"token",null));
+        map.put("token",SPUtils.getString(context,"token"));
         String sign = StringUtil.Md5Str(map,BaseUrlUtil.KEY);
         map.put("sign",sign);
         OkhttpUtil.okHttpPost(BaseUrlUtil.URL, map, new CallBackUtil.CallBackString() {
@@ -295,7 +295,7 @@ public class HomePresenter implements HomeContract.HomePresent {
         map.put("no",BaseUrlUtil.NO);
         map.put("random",StringUtil.random());
         map.put("method",BaseUrlUtil.GetVipUpdateMethod);
-        map.put("token",SharedPrefsUtil.getString(context,"token",null));
+        map.put("token",SPUtils.getString(context,"token"));
         String sign = StringUtil.Md5Str(map,BaseUrlUtil.KEY);
         map.put("sign",sign);
         OkhttpUtil.okHttpPost(BaseUrlUtil.URL, map, new CallBackUtil.CallBackString() {

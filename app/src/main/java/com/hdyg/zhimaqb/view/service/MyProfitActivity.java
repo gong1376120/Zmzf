@@ -77,7 +77,6 @@ public class MyProfitActivity extends BaseActivity implements ServiceContract.My
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profit);
         ButterKnife.bind(this);
-        SjApplication.getInstance().addActivity(this);//activity单例模式
         context = MyProfitActivity.this;
         initView();
     }

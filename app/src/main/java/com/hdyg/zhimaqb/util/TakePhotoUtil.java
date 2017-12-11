@@ -45,6 +45,7 @@ public class TakePhotoUtil {
 
     /**
      * 图像转字节
+     *
      * @param bm
      * @return
      */
@@ -56,30 +57,27 @@ public class TakePhotoUtil {
 
     /**
      * 图像转String
+     *
      * @param bitmap
      * @return
      */
-    public static String Bitmap2String(Bitmap bitmap)
-    {
+    public static String Bitmap2String(Bitmap bitmap) {
         return Base64.encodeToString(Bitmap2Bytes(bitmap), Base64.DEFAULT);
     }
+
     /**
      * string转成bitmap
      *
      * @param st
      */
-    public static Bitmap String2Bitmap(String st)
-    {
+    public static Bitmap String2Bitmap(String st) {
         Bitmap bitmap = null;
-        try
-        {
+        try {
             byte[] bitmapArray;
             bitmapArray = Base64.decode(st, Base64.DEFAULT);
             bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
             return bitmap;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return null;
         }
     }
@@ -116,7 +114,7 @@ public class TakePhotoUtil {
 
             Bitmap bitmap = Bitmap.createBitmap(myBitmap, 0, 0, width, height, matrix, true);
             Bitmap bitmap1 = toRoundBitmap(bitmap);
-            Log.d("czb","1");
+            Log.d("czb", "1");
             return bitmap1;
         } catch (IOException e) {
             // Log exception
@@ -127,28 +125,28 @@ public class TakePhotoUtil {
 
     /**
      * 把bitmap转成圆形
-     * */
-    public static Bitmap toRoundBitmap(Bitmap bitmap){
-        int width=bitmap.getWidth();
-        int height=bitmap.getHeight();
-        int r=0;
+     */
+    public static Bitmap toRoundBitmap(Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int r = 0;
         //取最短边做边长
-        if(width<height){
-            r=width;
-        }else{
-            r=height;
+        if (width < height) {
+            r = width;
+        } else {
+            r = height;
         }
         //构建一个bitmap
-        Bitmap backgroundBm= Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Bitmap backgroundBm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         //new一个Canvas，在backgroundBmp上画图
-        Canvas canvas=new Canvas(backgroundBm);
-        Paint p=new Paint();
+        Canvas canvas = new Canvas(backgroundBm);
+        Paint p = new Paint();
         //设置边缘光滑，去掉锯齿
         p.setAntiAlias(true);
-        RectF rect=new RectF(0, 0, r, r);
+        RectF rect = new RectF(0, 0, r, r);
         //通过制定的rect画一个圆角矩形，当圆角X轴方向的半径等于Y轴方向的半径时，
         //且都等于r/2时，画出来的圆角矩形就是圆形
-        canvas.drawRoundRect(rect, r/2, r/2, p);
+        canvas.drawRoundRect(rect, r / 2, r / 2, p);
         //设置当两个图形相交时的模式，SRC_IN为取SRC图形相交的部分，多余的将被去掉
         p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         //canvas将bitmap画在backgroundBmp上
@@ -158,11 +156,12 @@ public class TakePhotoUtil {
 
     /**
      * 解决小米等定制ROM手机返回的绝对路径错误的问题
+     *
      * @param context
      * @param intent
      * @return uri 拼出来的URI
      */
-    public static Uri getUri(Context context , Intent intent) {
+    public static Uri getUri(Context context, Intent intent) {
         Uri uri = intent.getData();
         String type = intent.getType();
         if (uri.getScheme().equals("file") && (type.contains("image/"))) {
@@ -174,7 +173,7 @@ public class TakePhotoUtil {
                 buff.append("(").append(MediaStore.Images.ImageColumns.DATA).append("=")
                         .append("'" + path + "'").append(")");
                 Cursor cur = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        new String[] { MediaStore.Images.ImageColumns._ID },
+                        new String[]{MediaStore.Images.ImageColumns._ID},
                         buff.toString(), null, null);
                 int index = 0;
                 for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
@@ -197,6 +196,7 @@ public class TakePhotoUtil {
         }
         return uri;
     }
+
     /**
      * 依据图片路径获取本地图片的Bitmap
      *
@@ -209,9 +209,7 @@ public class TakePhotoUtil {
         try {
             fis = new FileInputStream(url);
             bitmap = BitmapFactory.decodeStream(fis);
-
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             bitmap = null;
         } finally {
@@ -219,41 +217,41 @@ public class TakePhotoUtil {
                 try {
                     fis.close();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 fis = null;
             }
         }
-
         return bitmap;
     }
+
     /**
      * 从SD卡中获取图片并且比例压缩
-     * @param path 路径
+     *
+     * @param path    路径
      * @param mHeight 自定义高度
-     * @param mWidth 自定义宽度
+     * @param mWidth  自定义宽度
      * @return
      */
-    public static Bitmap getBitmapFromSDCard(String path, int mHeight, int mWidth)
-    {
+    public static Bitmap getBitmapFromSDCard(String path, int mHeight, int mWidth) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(path, options);
         //计算比例值
-        options.inSampleSize = calculateInSampleSize(options,mHeight,mWidth);
+        options.inSampleSize = calculateInSampleSize(options, mHeight, mWidth);
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(path, options);
     }
+
     /**
      * 计算压缩比例值inSampleSize
+     *
      * @param options 压缩的参数设置
      * @param mHeight 想要的高度
-     * @param mWidth 想要的宽度
+     * @param mWidth  想要的宽度
      * @return
      */
-    public static int calculateInSampleSize(BitmapFactory.Options options, int mHeight, int mWidth)
-    {
+    public static int calculateInSampleSize(BitmapFactory.Options options, int mHeight, int mWidth) {
         //原尺寸大小
         int yHeight = options.outHeight;
         int yWidth = options.outWidth;
@@ -264,16 +262,16 @@ public class TakePhotoUtil {
             inSampleSize = (int) (yWidth / mWidth);
         }
         //如果高度高的话根据宽度固定大小缩放
-        else if (yWidth < yHeight && yHeight > mHeight)
-        {
+        else if (yWidth < yHeight && yHeight > mHeight) {
             inSampleSize = (int) (yHeight / mHeight);
         }
-        if (inSampleSize <= 0)
+        if (inSampleSize <= 0) {
             inSampleSize = 1;
+        }
         return inSampleSize;
     }
 
-    public static Bitmap getBitmapByUri(Uri uri,ContentResolver cr){
+    public static Bitmap getBitmapByUri(Uri uri, ContentResolver cr) {
         Bitmap bitmap = null;
         try {
             bitmap = BitmapFactory.decodeStream(cr
@@ -287,13 +285,14 @@ public class TakePhotoUtil {
     }
 
     /**
-     *  缩放bitmap的方法
-     * @param bitmap 需要缩放的bitmap
-     * @param newWidth 想要的宽度
+     * 缩放bitmap的方法
+     *
+     * @param bitmap    需要缩放的bitmap
+     * @param newWidth  想要的宽度
      * @param newHeight 想要的高度
      * @return 返回新的bitmap
      */
-    public static Bitmap getNewBitmap(Bitmap bitmap,int newWidth,int newHeight){
+    public static Bitmap getNewBitmap(Bitmap bitmap, int newWidth, int newHeight) {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         float scaleWidth = ((float) newWidth) / width;
@@ -307,12 +306,13 @@ public class TakePhotoUtil {
     /**
      * 相册上传
      * 获取图片地址
+     *
      * @param data
      * @param context
-     * @param type 0表示头像上传，1表示身份证上传
+     * @param type    0表示头像上传，1表示身份证上传
      * @return
      */
-    public static String getPhotoPath(Intent data,Activity context,int type){
+    public static String getPhotoPath(Intent data, Activity context, int type) {
         String path = "";
         Bitmap newbm;
         Uri uri = data.getData();
@@ -321,10 +321,10 @@ public class TakePhotoUtil {
         try {
             Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
             //新的bitmap 缩放
-            if (type == 0){
+            if (type == 0) {
                 //头像
                 newbm = TakePhotoUtil.getNewBitmap(bitmap, 100, 100);
-            }else {
+            } else {
 //                newbm = TakePhotoUtil.getNewBitmap(bitmap, 300, 170);
                 newbm = bitmap;
             }
@@ -333,7 +333,7 @@ public class TakePhotoUtil {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             newbm.compress(Bitmap.CompressFormat.JPEG, 80, baos);
             byte[] bs = baos.toByteArray();
-            Log.d("czb","字节======"+bs);
+            Log.d("czb", "字节======" + bs);
             baos.flush();
             baos.close();
             String[] proj = {MediaStore.Images.Media.DATA};
@@ -355,11 +355,12 @@ public class TakePhotoUtil {
     /**
      * 相册上传
      * 获取图片字节数
+     *
      * @param data
      * @param context
      * @return
      */
-    public static byte[] getPhotoByte(Intent data,Activity context){
+    public static byte[] getPhotoByte(Intent data, Activity context) {
         byte[] bs = null;
         Uri uri = data.getData();
         ContentResolver cr = context.getContentResolver();
@@ -374,9 +375,9 @@ public class TakePhotoUtil {
             bs = baos.toByteArray();
             baos.flush();
             baos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return bs;
 
     }
@@ -384,11 +385,12 @@ public class TakePhotoUtil {
     /**
      * 拍照上传
      * 获取图片地址
+     *
      * @param data
      * @param context
      * @return
      */
-    public static String getPhotoPathTake(Intent data,Activity context){
+    public static String getPhotoPathTake(Intent data, Activity context) {
         String srcPath = "";
         Bundle extras = data.getExtras();
         Bitmap b = (Bitmap) extras.get("data");
@@ -413,7 +415,7 @@ public class TakePhotoUtil {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else {
+        } else {
             Toast toast = Toast.makeText(context, "保存失败，SD卡无效", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
@@ -423,13 +425,11 @@ public class TakePhotoUtil {
     }
 
     /**
-     *
      * @param fileUrl 图片路径
-     * @param b 图片字节
+     * @param b       图片字节
      * @return reqMap
      */
-    public static Map<String, String> imageUpLoadUtil(String token, String fileUrl, byte[] b,String fileType){
-        LogUtil.i("传递的路径====="+fileUrl);
+    public static Map<String, String> imageUpLoadUtil(String token, String fileUrl, byte[] b, String fileType) {
         Map<String, String> reqMap = new HashMap<>();
         FileInputStream fileInputStream = null;
         try {
@@ -441,28 +441,23 @@ public class TakePhotoUtil {
         ByteArrayOutputStream baos = null;
         baos = new ByteArrayOutputStream();
         int len = 0;
-        byte [] buffer = new byte[1024];
+        byte[] buffer = new byte[1024];
         try {
-            while( (len = fileInputStream.read(buffer)) != -1){
+            while ((len = fileInputStream.read(buffer)) != -1) {
                 baos.write(buffer, 0, len);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("czb","异常------>"+e.toString());
         }
-        if (b!=null){
+        if (b != null) {
             src = b;
-        }else {
+        } else {
             //转成字节
             src = baos.toByteArray();
         }
-
-        String checkValue = StringUtil.generateCheckValue(src);
         String content = StringUtil.byte2hex(src);
         String suffix = "jpg";
-
         //头像上传封装数据
-        Log.d("czb","执行头像上传程序");
         reqMap.put("no", BaseUrlUtil.NO);
         reqMap.put("random", StringUtil.random());
         reqMap.put("suffix", suffix);
@@ -478,8 +473,9 @@ public class TakePhotoUtil {
 
     /**
      * 压缩并保存图片
-     * @param finalBitmap   图片
-     * @param filename      图片名
+     *
+     * @param finalBitmap 图片
+     * @param filename    图片名
      * @return
      */
     public static File saveImage(Context context, Bitmap finalBitmap, String filename) {
@@ -489,12 +485,12 @@ public class TakePhotoUtil {
 
 //        String root = Environment.getExternalStorageDirectory().toString();
 //        File myDir = new File(root + "/saved_images");
-        if (!myDir.exists()){
+        if (!myDir.exists()) {
             myDir.mkdirs();
         }
         String fname = filename;
-        File file = new File (myDir, fname);
-        if (file.exists ()) file.delete ();
+        File file = new File(myDir, fname);
+        if (file.exists()) file.delete();
         try {
             file.createNewFile();
             FileOutputStream out = new FileOutputStream(file);
@@ -536,7 +532,6 @@ public class TakePhotoUtil {
             be = 1;
         newOpts.inSampleSize = be;//设置采样率
 
-//        newOpts.inPreferredConfig = Config.ARGB_8888;//该模式是默认的,可不设
         newOpts.inPurgeable = true;// 同时设置才会有效
         newOpts.inInputShareable = true;//。当系统内存不够时候图片自动被回收
 
@@ -550,25 +545,18 @@ public class TakePhotoUtil {
      * @param image
      */
 
-    public static File compressImage(Bitmap image) {
+    public static File compressImage(String filePath, Bitmap image) {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
         int options = 100;
 
-        while (baos.toByteArray().length / 1024 > 300) {  //循环判断如果压缩后图片是否大于300kb,大于继续压缩
+        while (baos.toByteArray().length / 1024 > 400) {  //循环判断如果压缩后图片是否大于300kb,大于继续压缩
             baos.reset();//重置baos即清空baos
             options -= 10;//每次都减少10
             image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
-            long length = baos.toByteArray().length;
         }
-//        long length = baos.toByteArray().length;
-//        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
-//        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
-
-        // 格式化日期
-        String name = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-        File file = new File(Environment.getExternalStorageDirectory() +"/"+ name + ".png");
+        File file = new File(filePath);
         try {
             FileOutputStream fos = new FileOutputStream(file);
             try {
@@ -591,13 +579,9 @@ public class TakePhotoUtil {
      * @param filePath 文件路径
      */
     public static File compressImage(final String filePath) {
-        final File[] file = new File[1];
         Bitmap bitmap = compressImageFromFile(filePath, 1024f);// 按尺寸压缩图片
         int size = bitmap.getByteCount();
-        file[0] = compressImage(bitmap);  //按质量压缩图片
-//            File file = ImageUtils.bitmap2File(compressBitmap);
-//              String fileSize = FileUtils.getFileSize(file);
-//                upLoadPhotos(file);
-        return file[0];
+        File file = compressImage(filePath, bitmap);  //按质量压缩图片
+        return file;
     }
 }

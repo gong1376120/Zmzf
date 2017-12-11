@@ -87,21 +87,38 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-        <activity android:name=".view.MainActivity"/>
-        <activity android:name=".view.UserLoginActivity"/>
-        <activity android:name=".view.UserRegistActivity"/>
-        <activity
-            android:name=".view.ShareH5WebViewActivity"
-            android:hardwareAccelerated="true"/>
-        <activity android:name=".view.home.BillActivity"/>
-        <activity android:name=".view.person.SetUpActivity"/>
-        <activity android:name=".view.person.TixianActivity"/>
-        <activity android:name=".view.person.SearchActivity"/>
-        <activity android:name=".view.person.RenzhengMainActivity"/>
-        <activity android:name=".view.person.IDCardActivity"/>
 
         <activity
+            android:name=".view.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.UserLoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.UserRegistActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.ShareH5WebViewActivity"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.home.BillActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.person.MeSettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.person.AuthenticationBankCardActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.person.BankSearchActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.person.AuthenticationNameActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".view.WelcomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ThemeSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -109,26 +126,57 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.person.UpdatePwdActivity"/>
-        <activity android:name=".view.service.TuiguangActivity"/>
-        <activity android:name=".view.service.ShareQRCodeActivity"/>
-        <activity android:name=".view.home.PayMethodActivity"/>
-        <activity android:name=".view.home.PayMoneyQRCodeActivity"/>
-        <activity android:name=".view.service.MyProfitActivity"/>
-        <activity android:name=".view.service.MyTeamActivity"/>
-        <activity android:name=".view.service.MyTeamDownActivity"/>
-        <activity android:name=".view.service.BalanceCashActivity"/>
-        <activity android:name=".view.message.MessageDetailActivity"/>
-        <activity android:name=".view.person.TuiSongActivity"/>
-        <activity android:name=".view.home.OnlineUpdateActivity"/>
-        <activity android:name=".view.home.RechargeActivity"/>
-        <activity android:name=".view.person.MerchantActivity"/>
-
-        <activity android:name=".view.person.ResetBankCardActivity"/>
-        <activity android:name=".view.person.WithdrawalAccountActivity"/>
-        <activity android:name=".view.XinYongCardActivity"/>
-        <activity android:name=".view.service.XycardActivity"/>
-        <activity android:name=".view.GuideFirstActivity">
+        <activity
+            android:name=".view.person.UpdatePwdActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.home.PayMethodActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.home.PayMoneyQRCodeActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.service.MyProfitActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.service.MyTeamActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.service.MyTeamDownActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.service.BalanceCashActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.message.MessageDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.person.TuiSongActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.home.OnlineUpdateActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.home.RechargeActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.person.MerchantActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.person.ResetBankCardActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.person.MeMyBankCardActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.XinYongCardActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.service.XycardActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.GuideFirstActivity"
+            android:screenOrientation="portrait">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -137,12 +185,48 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".view.MoreActivity"/>
-        <activity android:name=".view.share.ShareDataListActivity">
+        <activity
+            android:name=".view.MoreActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.share.ShareDataListActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.person.MeSchoolActivity">
+        <activity
+            android:name=".view.person.MeSchoolActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.CameraActivity">
+        <activity
+            android:name=".view.CameraActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.person.MeSuggestionActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.person.AuthenBankCardActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.person.UpdateTelActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.person.MeMessageActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.person.MeMyServiceActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.person.QuestionAnswerActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.person.UpdateTelSActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

@@ -8,6 +8,8 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -37,7 +39,33 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     private int mScreenHeight;
     private CameraTopRectView topView;
     private String filePath;
+    private String fileType;
     private ProgressBar progressBar;
+
+    private static final int MSG_LOAD_SUCCESS = 1;
+    private static final int MSG_LOAD_FAILED = 2;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_LOAD_SUCCESS:
+                    progressBar.setVisibility(GONE);
+                    mActivity.getIntent().putExtra("fileType", fileType);
+                    mActivity.setResult(Activity.RESULT_OK, mActivity.getIntent());
+                    mActivity.finish();
+                    break;
+
+                case MSG_LOAD_FAILED:
+                    progressBar.setVisibility(GONE);
+                    mActivity.setResult(Activity.RESULT_CANCELED);
+                    mActivity.finish();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     public CameraSurfaceView(Context context) {
         this(context, null);
@@ -200,59 +228,59 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         private Bitmap bitmap;
 
         @Override
-        public void onPictureTaken(byte[] data, Camera Camera) {
-            topView.draw(new Canvas());
-            BufferedOutputStream bos = null;
-            Bitmap bm = null;
-            if (data != null) {
-                try {
-                    // 获得图片
-                    bm = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    Matrix m = new Matrix();
-                    int height = bm.getHeight();
-                    int width = bm.getWidth();
-                    m.setRotate(90);
-                    bitmap = Bitmap.createBitmap(bm, 0, 0, width, height, m, true);
-                    File file = new File(filePath);
-                    bos = new BufferedOutputStream(new FileOutputStream(file));
-                    Bitmap sizeBitmap = Bitmap.createScaledBitmap(bitmap, topView.getViewWidth(), topView.getViewHeight(), true);
-                    // 截取图片部分
-                    bm = Bitmap.createBitmap(sizeBitmap, topView.getRectLeft(),
-                            topView.getRectTop(),
-                            topView.getRectRight() - topView.getRectLeft(),
-                            topView.getRectBottom() - topView.getRectTop());
-                    //将图片压缩到流中，写入文件
-                    bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-                } catch (Exception e) {
-                    LogUtil.i(e.toString());
-                    e.printStackTrace();
-                } finally {
-                    progressBar.setVisibility(GONE);
-                    try {
-                        bos.flush();//输出
-                        bos.close();//关闭
-                        bm.recycle();// 回收bitmap空间
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        mActivity.setResult(Activity.RESULT_CANCELED);
-                        mActivity.finish();
-                    }
+        public void onPictureTaken(final byte[] data, Camera Camera) {
 
-                }
-                mActivity.setResult(Activity.RESULT_OK);
-                mActivity.finish();
+
+            topView.draw(new Canvas());
+
+
+            if (data != null) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        BufferedOutputStream bos = null;
+                        Bitmap bm = null;
+                        try {
+                            // 获得图片
+                            bm = BitmapFactory.decodeByteArray(data, 0, data.length);
+                            Matrix m = new Matrix();
+                            int height = bm.getHeight();
+                            int width = bm.getWidth();
+                            m.setRotate(90);
+                            bitmap = Bitmap.createBitmap(bm, 0, 0, width, height, m, true);
+                            File file = new File(filePath);
+                            bos = new BufferedOutputStream(new FileOutputStream(file));
+                            Bitmap sizeBitmap = Bitmap.createScaledBitmap(bitmap, topView.getViewWidth(), topView.getViewHeight(), true);
+                            // 截取图片部分
+                            bm = Bitmap.createBitmap(sizeBitmap, topView.getRectLeft(),
+                                    topView.getRectTop(),
+                                    topView.getRectRight() - topView.getRectLeft(),
+                                    topView.getRectBottom() - topView.getRectTop());
+                            //将图片压缩到流中，写入文件
+                            bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                            bos.flush();
+                            bos.close();
+                            bm.recycle();
+                        } catch (Exception e) {
+                            LogUtil.i(e.toString());
+                            e.printStackTrace();
+                            mHandler.sendEmptyMessage(MSG_LOAD_FAILED);
+                        }
+                        mHandler.sendEmptyMessage(MSG_LOAD_SUCCESS);
+                    }
+                }).start();
             } else {
                 progressBar.setVisibility(GONE);
                 mActivity.setResult(Activity.RESULT_CANCELED);
                 mActivity.finish();
             }
         }
-
     };
 
 
-    public void takePicture(String filePath, ProgressBar progressBar) {
+    public void takePicture(String filePath, ProgressBar progressBar, String fileType) {
         this.filePath = filePath;
+        this.fileType = fileType;
         this.progressBar = progressBar;
         LogUtil.i("filePath" + filePath);
         //设置参数,并拍照

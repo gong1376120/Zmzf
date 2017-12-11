@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
+    android:background="@color/color_bg"
     android:orientation="vertical">
 
     <include layout="@layout/top_bar_layout"/>
@@ -280,18 +280,26 @@
                 </LinearLayout>
             </LinearLayout>
             <!--手持身份证-->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="125dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="2.5dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:orientation="vertical">
 
                     <ImageView
@@ -329,92 +337,13 @@
                         android:visibility="gone"/>
                 </LinearLayout>
 
-                <LinearLayout
+                <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="2.5dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:visibility="invisible">
+                    android:layout_weight="1"/>
 
-                    <ImageView
-                        android:id="@+id/idcard_6_iv"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/yingye"/>
-
-                    <LinearLayout
-                        android:id="@+id/idcard_6_ll"
-                        android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:layout_marginTop="-25dp"
-                        android:alpha="0.7"
-                        android:background="@color/text_color_black"
-                        android:gravity="center">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="营业执照或者房屋租赁合同"
-                            android:textColor="@color/white"
-                            android:textSize="12dp"/>
-                    </LinearLayout>
-
-                    <ProgressBar
-                        android:id="@+id/idcard_6_pb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="-90dp"
-                        android:visibility="gone"/>
-                </LinearLayout>
             </LinearLayout>
 
-            <!--<LinearLayout-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:gravity="center"-->
-            <!--android:layout_height="125dp">-->
-            <!--<LinearLayout-->
-            <!--android:layout_gravity="center"-->
-            <!--android:orientation="vertical"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent">-->
-            <!--<ImageView-->
-            <!--android:layout_gravity="center"-->
-            <!--android:scaleType="centerCrop"-->
-            <!--android:id="@+id/idcard_5_iv"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:src="@mipmap/bank_card2"/>-->
-            <!--<LinearLayout-->
-            <!--android:id="@+id/idcard_5_ll"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginTop="-25dp"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:alpha="0.7"-->
-            <!--android:background="@color/text_color_black"-->
-            <!--android:layout_height="25dp">-->
-            <!--<TextView-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="12dp"-->
-            <!--android:text="    本人手持身份证正面半身照      "/>-->
-            <!--</LinearLayout>-->
-            <!--<ProgressBar-->
-            <!--android:id="@+id/idcard_5_pb"-->
-            <!--android:visibility="gone"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginTop="-90dp"/>-->
-            <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
 
         </LinearLayout>
     </ScrollView>
@@ -423,7 +352,7 @@
         android:id="@+id/idcard_submit_btn"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_marginTop="35dp"
+
         android:background="@color/main_color"
         android:text="提交"
         android:textColor="@color/white"

@@ -23,6 +23,8 @@ import com.hdyg.zhimaqb.presenter.HomePresenter;
 import com.hdyg.zhimaqb.R;
 import com.hdyg.zhimaqb.util.BaseUrlUtil;
 import com.hdyg.zhimaqb.util.JsonUtil;
+import com.hdyg.zhimaqb.util.LogUtil;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.SharedPrefsUtil;
 import com.hdyg.zhimaqb.util.SjApplication;
 import com.hdyg.zhimaqb.util.StringUtil;
@@ -83,8 +85,8 @@ public class PayMethodActivity extends BaseActivity implements HomeContract.PayM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_method);
-        SjApplication.getInstance().addActivity(this);//activity单例模式
         ButterKnife.bind(this);
+
         context = PayMethodActivity.this;
         initView();
     }
@@ -100,7 +102,7 @@ public class PayMethodActivity extends BaseActivity implements HomeContract.PayM
         PayType = getIntent().getStringExtra("PayType");//支付类型
         type = getIntent().getStringExtra("type");//传递支付类型
         barContent = getIntent().getStringExtra("content");//标题内容
-        token = SharedPrefsUtil.getString(context, "token", "");
+        token = SPUtils.getString(context, "token");
         if (barContent!=null){
             topContext.setText(barContent);
         }
@@ -116,9 +118,9 @@ public class PayMethodActivity extends BaseActivity implements HomeContract.PayM
         mPresenter.getPayMethodData(map);//获取支付通道
 
         if (moneySize.contains(".")) {
-            paymethodMoney.setText("￥" + moneySize);
+            paymethodMoney.setText("¥ " + moneySize);
         } else {
-            paymethodMoney.setText("￥" + moneySize + ".00");
+            paymethodMoney.setText("¥ " + moneySize + ".00");
         }
         paymethodType.setText(PayType);
         /**
@@ -137,9 +139,10 @@ public class PayMethodActivity extends BaseActivity implements HomeContract.PayM
                             @Override
                             public void bindData(RecyclerViewHolder holder, int position, PayMethodCallBackModel.PayMethodData.PayMethodModel item) {
                                 holder.setText(R.id.list_item_method, item.getPay_name());
-                                holder.setText(R.id.list_item_limitmoney, "单笔" + item.getMin_money() + "元-" + item.getMax_money() + "元");
+                                holder.setText(R.id.list_item_limitmoney,  item.getMin_money() + "-" + item.getMax_money() + "元/笔");
                                 holder.setText(R.id.list_item_jiesuan, item.getAccounting_date());
                                 holder.setText(R.id.list_item_feilv, item.getFee() + "");
+                                holder.setText(R.id.list_item_jiesuan1, item.getAdd_fee()+"元/笔");
                                 holder.setText(R.id.list_item_time, item.getStart_time() + "-" + item.getEnd_time());
                             }
                         };
@@ -218,7 +221,8 @@ public class PayMethodActivity extends BaseActivity implements HomeContract.PayM
      */
     @Override
     public void onGetPayMethodData(String str) {
-        Log.d("czb", "获取支付通道回调数据=====" + str);
+
+        LogUtil.i("获取支付通道回调数据=====" + str);
         try {
             PayMethodCallBackModel payMethodCallBackModel = JsonUtil.parseJsonWithGson(str, PayMethodCallBackModel.class);
             if (payMethodCallBackModel.getStatus() == BaseUrlUtil.STATUS) {

@@ -19,6 +19,7 @@ import com.hdyg.zhimaqb.model.ShareModel;
 import com.hdyg.zhimaqb.R;
 import com.hdyg.zhimaqb.ui.SharePopupWindow;
 import com.hdyg.zhimaqb.util.BaseUrlUtil;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.SharedPrefsUtil;
 import com.hdyg.zhimaqb.util.SjApplication;
 import com.hdyg.zhimaqb.util.StringUtil;
@@ -81,9 +82,9 @@ public class PayMoneyQRCodeActivity extends BaseActivity implements PlatformActi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_money_qrcode);
-        SjApplication.getInstance().addActivity(this);//activity单例模式
-        context = PayMoneyQRCodeActivity.this;
         ButterKnife.bind(this);
+        context = PayMoneyQRCodeActivity.this;
+
         initView();
     }
 
@@ -109,7 +110,7 @@ public class PayMoneyQRCodeActivity extends BaseActivity implements PlatformActi
         paytype.setText(PayType + "支付");
         payGetmoneyTv.setText(moneySize);
         payErweimaIv.setImageBitmap(bitmap);
-        if (!resultType.equals("4")){
+        if (!resultType.equals("4")) {
             timer.schedule(task, TIME, TIME);//5秒后执行，经过5秒再次执行
         } else {
             timer.schedule(task1, TIME, TIME);
@@ -143,7 +144,7 @@ public class PayMoneyQRCodeActivity extends BaseActivity implements PlatformActi
             Log.d("czb", "method===" + method);
             map.put("method", method);
             map.put("trade_no", tradeNo);
-            map.put("token", SharedPrefsUtil.getString(context, "token", null));
+            map.put("token", SPUtils.getString(context, "token"));
             map.put("no", BaseUrlUtil.NO);
             map.put("random", StringUtil.random());
             String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
@@ -183,7 +184,7 @@ public class PayMoneyQRCodeActivity extends BaseActivity implements PlatformActi
 //            map.put("method", BaseUrlUtil.GetPayResultDataMethod);
             map.put("method", BaseUrlUtil.GetUpgradeRstMethod);
             map.put("level", level);
-            map.put("token", SharedPrefsUtil.getString(context, "token", null));
+            map.put("token", SPUtils.getString(context, "token"));
             map.put("no", BaseUrlUtil.NO);
             map.put("random", StringUtil.random());
             String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
@@ -228,7 +229,7 @@ public class PayMoneyQRCodeActivity extends BaseActivity implements PlatformActi
     };
 
 
-    @OnClick({R.id.top_left_ll, R.id.save_img,R.id.top_right_ll})
+    @OnClick({R.id.top_left_ll, R.id.save_img, R.id.top_right_ll})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.top_left_ll:
@@ -238,7 +239,7 @@ public class PayMoneyQRCodeActivity extends BaseActivity implements PlatformActi
                 //保存图片按钮
                 if (bitmap != null) {
                     //保存图片按钮
-                    String path = StringUtil.saveImageToGallery(context, bitmap, 0);
+                    String path = StringUtil.saveImageToGallery(context, bitmap, 0, "qr.jpg");
                     toastNotifyShort("图片保存成功");
                 } else {
                     toastNotifyShort("图片保存失败");
@@ -246,23 +247,24 @@ public class PayMoneyQRCodeActivity extends BaseActivity implements PlatformActi
                 break;
             case R.id.top_right_ll:
                 // 分享
-                String path = StringUtil.saveImageToGallery(context, bitmap, 0);
+                String path = StringUtil.saveImageToGallery(context, bitmap, 0, "qr.jpg");
                 share = new SharePopupWindow(context);
                 share.setPlatformActionListener(PayMoneyQRCodeActivity.this);
                 ShareModel model = new ShareModel();
-                model.setImageUrl("http://h.hiphotos.baidu.com/image/pic/item/ac4bd11373f082028dc9b2a749fbfbedaa641bca.jpg");//网络路径
-                model.setText("测试文本");
-                model.setTitle("测试");
-                model.setUrl("www.baidu.com");
+                model.setText("二维码付款");
+                model.setTitle("二维码");
                 model.setImagePath(path);//本地路径
-                Log.d("czb","分享") ;
+                Log.d("czb", "分享");
                 share.initShareParams(model, 2);//1表示图文分享    2表示图片分享
                 share.showShareWindow();
                 share.showAtLocation(PayMoneyQRCodeActivity.this.findViewById(R.id.main),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
+            default:
+                break;
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -270,6 +272,7 @@ public class PayMoneyQRCodeActivity extends BaseActivity implements PlatformActi
             share.dismiss();
         }
     }
+
     @Override
     protected void onDestroy() {
         timer.cancel();//取消定时器

@@ -8,7 +8,9 @@ public class BaseUrlUtil {
     public static String URL = "http://zhima.dyupay.com/app/login/index.html";
     public static int STATUS = 1;//请求返回状态 1为成功
     public static String NO = "2147483648";
+
     public static String KEY = "9257bae839cbe04950033fc7b34a8784";
+   // public static String KEY = "5a6ad4ac841ba8337cd47c8c9835e64f";
     public static String YUNMAI_USERNAME = "17d6dcbe-03d8-41cd-b1fb-138f0f189689";//开发者平台API帐号  云脉开发者账号及密码(拍照识别)
     public static String YUNMAI_PASSWORD = "WASiVCyBRVoVXqmsMfqMMTnXLJPrXB";//开发者平台API密码
     public static String YUNMAI_ENGINE_URL = "http://www.yunmaiocr.com/SrvXMLAPI";//访问服务器地址
@@ -70,11 +72,10 @@ public class BaseUrlUtil {
     public static String ImgUploadMethod = "img_upload";//上传证件照片的方法
 
 
-
     //立木征信apikey
     public static String LmzxApiKey = "5775868574280229";
     public static String LmzxApiSecret = "TLNRGHvoGZfXUKVSHCUmWhapBrOP2g6Q";
-//    public static String LmzxApiKey = "7348997802722446";
+    //    public static String LmzxApiKey = "7348997802722446";
 //    public static String LmzxApiSecret = "68fQrMCk6wJmtkt7PRtcqvjSg0NbFCnX";
     public static String LmzxApiCallBcakUrl = "https://u51jf.com/app/zxcx/backurl.html";//立木征信回调结果URL
 
@@ -85,7 +86,16 @@ public class BaseUrlUtil {
     public static String GetUpgradeRstMethod = "get_upgrade_rst";       // 获取充值会员的结果
     public static String ImgConfirmMethod = "img_confirm";              // 上传身份证信息确认
     public static String GetMsgListMethod = "get_msg_list";
+    public static String GetServiceQuestion = "get_service";
     public static String getWalletMsg = "get_wallet_msg";               // 获取提现账户信息
     public static String readdwalletSendmsg = "readdwallet_sendmsg";    // 获取验证码（换绑）
     public static String readdwallet = "readdwallet";                   // 换绑卡
+    public static String amendBankstatus = "amend_bankstatus";           //取消绑定
+
+
+    public static String userMsgBank = "usermsg_bank";                   // 获取用户认证详细
+    public static String getOldCode = "http://zhima.dyupay.com/app/user/send_sms";                   // 获取旧手机验证码
+    public static String getNewCode = "http://zhima.dyupay.com/app/user/amend_send_sms";                   //获取新手机验证码
+    public static String updateTel = "http://zhima.dyupay.com/app/user/amend_phone";                   // 修改手机号
+
 }

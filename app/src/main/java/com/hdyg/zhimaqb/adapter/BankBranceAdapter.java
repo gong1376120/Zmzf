@@ -22,10 +22,8 @@ public class BankBranceAdapter extends BaseAdapter {
     private List<BankBranceModel> list;
 
     public BankBranceAdapter(Context context, List<BankBranceModel> list) {
-
         this.context = context;
         this.list = list;
-
     }
 
     @Override
@@ -52,10 +50,8 @@ public class BankBranceAdapter extends BaseAdapter {
         if (convertView==null) {
             convertView= LayoutInflater.from(context).inflate(R.layout.spinner_checked_text, null);
             holder=new ViewHolder();
-
             convertView.setTag(holder);
             holder.groupItem=(TextView) convertView.findViewById(R.id.text);
-
         }
         else{
             holder=(ViewHolder) convertView.getTag();

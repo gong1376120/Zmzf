@@ -24,7 +24,7 @@
 
     <style name="ItemLayout">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_height">52dp</item>
         <item name="android:background">@drawable/click_ripple</item>
     </style>
 
@@ -34,7 +34,7 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_marginLeft">56dp</item>
         <item name="android:textColor">@color/text_color_black</item>
-        <item name="android:textSize">15dp</item>
+        <item name="android:textSize">16dp</item>
     </style>
 
     <style name="ItemImageView">

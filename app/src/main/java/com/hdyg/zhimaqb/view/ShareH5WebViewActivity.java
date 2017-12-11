@@ -30,6 +30,7 @@ import com.hdyg.zhimaqb.R;
 import com.hdyg.zhimaqb.model.ShareModel;
 import com.hdyg.zhimaqb.ui.SharePopupWindow;
 import com.hdyg.zhimaqb.util.LogUtil;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.SharedPrefsUtil;
 import com.hdyg.zhimaqb.util.SjApplication;
 import com.mob.tools.utils.UIHandler;
@@ -74,9 +75,9 @@ public class ShareH5WebViewActivity extends BaseActivity implements PlatformActi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_h5_web_view);
-        SjApplication.getInstance().addActivity(this);
-        context = ShareH5WebViewActivity.this;
         ButterKnife.bind(this);
+        context = ShareH5WebViewActivity.this;
+
         initWebViewSet();
         initView();
     }
@@ -103,12 +104,11 @@ public class ShareH5WebViewActivity extends BaseActivity implements PlatformActi
         mWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
 
-
         // 重新WebView加载URL的方法
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LogUtil.i("拦截"+url);
+                LogUtil.i("拦截" + url);
                 if (parseScheme(url)) {
                     try {
                         Uri uri = Uri.parse(url);
@@ -122,28 +122,25 @@ public class ShareH5WebViewActivity extends BaseActivity implements PlatformActi
 
                     }
                 } else {
-                   mWebView.loadUrl(url);
+                    mWebView.loadUrl(url);
                 }
                 return true;
             }
 
 
             @Override
-            public void onReceivedError(WebView view, int errorCode,
-                                        String description, String failingUrl) {
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 Toast.makeText(ShareH5WebViewActivity.this, "网络错误", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                // TODO Auto-generated method stub
                 super.onPageStarted(view, url, favicon);
                 mProgress.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                // TODO Auto-generated method stub
                 mProgress.setVisibility(View.GONE);
                 super.onPageFinished(view, url);
             }
@@ -163,7 +160,7 @@ public class ShareH5WebViewActivity extends BaseActivity implements PlatformActi
         topContext = getIntent().getStringExtra("topContext");
         topRight = getIntent().getStringExtra("topRight");
         URL = getIntent().getStringExtra("url");
-        isPlay = getIntent().getBooleanExtra("isPlay",true);
+        isPlay = getIntent().getBooleanExtra("isPlay", true);
 
         LogUtil.i(URL + topContext);
         if ("分享".equals(topRight)) {
@@ -197,11 +194,13 @@ public class ShareH5WebViewActivity extends BaseActivity implements PlatformActi
                 share = new SharePopupWindow(context);
                 share.setPlatformActionListener(ShareH5WebViewActivity.this);
                 ShareModel model = new ShareModel();
-                String sharetitle = SharedPrefsUtil.getString(context, "sharetitle", "");
-                String sharecontent = SharedPrefsUtil.getString(context, "sharecontent", "");
-                String shareregisterurl = SharedPrefsUtil.getString(context, "shareregisterurl", "");
+                String sharetitle = SPUtils.getString(context, "sharetitle");
+                String sharecontent = SPUtils.getString(context, "sharecontent");
+                String shareregisterurl = SPUtils.getString(context, "shareregisterurl");
                 String url = getIntent().getStringExtra("url");
-                String logo_path = SharedPrefsUtil.getString(context, "logo_path", "");
+
+                String logo_path = SPUtils.getString(context, "logo_path");
+
                 model.setImagePath(logo_path);//图片
                 model.setText(sharecontent);//文本内容
                 model.setTitle(sharetitle);//标题
@@ -209,8 +208,7 @@ public class ShareH5WebViewActivity extends BaseActivity implements PlatformActi
                 model.setUrl(url);//链接
                 share.initShareParams(model, 1);//1表示图文分享    2表示图片分享
                 share.showShareWindow();
-                share.showAtLocation(ShareH5WebViewActivity.this.findViewById(R.id.rl_root),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                share.showAtLocation(ShareH5WebViewActivity.this.findViewById(R.id.rl_root),Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.addvip_btn:
 //                //加入会员按钮
@@ -307,6 +305,8 @@ public class ShareH5WebViewActivity extends BaseActivity implements PlatformActi
 
     @Override
     public void onError(Platform platform, int i, Throwable throwable) {
+        LogUtil.i("throwable" + platform.toString());
+        LogUtil.i("throwable");
         Message msg = new Message();
         msg.what = 1;
         UIHandler.sendMessage(msg, this);
@@ -321,11 +321,14 @@ public class ShareH5WebViewActivity extends BaseActivity implements PlatformActi
 
     @Override
     public boolean handleMessage(Message msg) {
+
         int what = msg.what;
         if (what == 1) {
             Toast.makeText(this, "分享失败", Toast.LENGTH_SHORT).show();
         }
         if (share != null) {
+
+            LogUtil.i("throwable123213");
             share.dismiss();
         }
         return false;

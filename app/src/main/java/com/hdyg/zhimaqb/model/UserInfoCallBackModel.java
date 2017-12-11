@@ -1,5 +1,7 @@
 package com.hdyg.zhimaqb.model;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/7/25.
  * 用户个人信息实体类
@@ -34,18 +36,23 @@ public class UserInfoCallBackModel {
         this.data = data;
     }
 
-    public class UserInfoModel{
+    public class UserInfoModel {
         private String random;//登录电话号码
         private String user_id;//用户昵称
         private String login_name;
         private String level_name;
         private String bankstatus;
+        private String username;
         private String real;
         private String sharetitle;
         private String sharecontent;
         private String shareregisterurl;
         private String merchant_confirm;//商户是否认证 0未认证  1认证  2认证失败  3认证中
         private String img_confirm;     //个人是否认证 0未认证  1认证  2认证失败  3认证中
+        private String levle1_name;
+        private String level1_phone;
+
+
 
         public String getImg_confirm() {
             return img_confirm;
@@ -134,5 +141,31 @@ public class UserInfoCallBackModel {
         public void setShareregisterurl(String shareregisterurl) {
             this.shareregisterurl = shareregisterurl;
         }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getLevle1_name() {
+            return levle1_name;
+        }
+
+        public void setLevle1_name(String levle1_name) {
+            this.levle1_name = levle1_name;
+        }
+
+        public String getLevel1_phone() {
+            return level1_phone;
+        }
+
+        public void setLevel1_phone(String level1_phone) {
+            this.level1_phone = level1_phone;
+        }
     }
+
+
 }

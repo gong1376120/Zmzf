@@ -1,60 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color">
+    android:background="@color/color_bg"
+    android:orientation="vertical">
+
     <LinearLayout
-        android:background="@color/green"
         android:layout_width="match_parent"
-        android:layout_height="44dp">
+        android:layout_height="44dp"
+        android:background="@color/green">
+
         <LinearLayout
-            android:layout_weight="4"
             android:layout_width="0dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginLeft="12dp"
-            android:background="@drawable/btn_shape"
-            android:layout_height="30dp">
+            android:layout_weight="4"
+            android:background="@drawable/btn_shape">
+
             <EditText
                 android:id="@+id/search_word_et"
-                android:layout_marginLeft="12dp"
-                android:background="@null"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:textSize="14dp"
-                android:hint="搜索支行名称(如:厦门)"/>
+                android:layout_marginLeft="12dp"
+                android:background="@null"
+                android:hint="搜索支行名称(如:厦门)"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textSize="14dp"/>
         </LinearLayout>
+
         <com.hdyg.zhimaqb.util.RevealLayout
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="44dp">
+            android:layout_height="44dp"
+            android:layout_weight="1">
+
             <TextView
                 android:id="@+id/search_tv"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="44dp"
-                android:textColor="@color/text_color_black"
-                android:textSize="14dp"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="搜索"/>
+                android:text="搜索"
+                android:textColor="@color/text_color_black"
+                android:textSize="14dp"/>
         </com.hdyg.zhimaqb.util.RevealLayout>
 
     </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
     <LinearLayout
         android:id="@+id/quesheng_ll"
-        android:visibility="gone"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+
         <ImageView
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:src="@mipmap/quesheng"/>
     </LinearLayout>
 

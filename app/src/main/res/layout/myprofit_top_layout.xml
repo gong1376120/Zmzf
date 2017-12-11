@@ -115,7 +115,7 @@
 
     </LinearLayout>
     <TextView
-        android:background="@color/bg_color"
+        android:background="@color/color_bg"
         android:textColor="@color/text_color_black"
         android:gravity="center|left"
         android:layout_width="match_parent"

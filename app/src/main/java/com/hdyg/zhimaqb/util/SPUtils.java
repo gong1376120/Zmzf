@@ -13,6 +13,7 @@ public class SPUtils {
      */
     public static final String FILE_NAME = "ZhiMa";
 
+
     public static final String URL_ABOUT_US = "aboutUs";
     public static final String URL_LAWS = "laws";
     public static final String URL_HELP = "helpCenters";
@@ -74,7 +75,7 @@ public class SPUtils {
 
     public static String getString(Context context, String key) {
         SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
-        return sp.getString(key,null);
+        return sp.getString(key,"");
     }
 
     public static int getInt(Context context, String key) {

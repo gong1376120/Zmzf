@@ -30,7 +30,6 @@ public class TuiSongActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tui_song);
         ButterKnife.bind(this);
-        SjApplication.getInstance().addActivity(this);//activity单例模式
         initView();
     }
 

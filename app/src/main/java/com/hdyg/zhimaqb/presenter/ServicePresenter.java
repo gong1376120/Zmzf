@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.hdyg.zhimaqb.util.BaseUrlUtil;
-import com.hdyg.zhimaqb.util.SharedPrefsUtil;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.StringUtil;
 import com.hdyg.zhimaqb.util.okhttp.CallBackUtil;
 import com.hdyg.zhimaqb.util.okhttp.OkhttpUtil;
@@ -83,7 +83,7 @@ public class ServicePresenter implements ServiceContract.ServicePresent {
         map.put("no", BaseUrlUtil.NO);
         map.put("random", StringUtil.random());
         map.put("method", BaseUrlUtil.GetAppIconDataMethod);
-        map.put("token", SharedPrefsUtil.getString(context,"token",""));
+        map.put("token", SPUtils.getString(context,"token"));
         String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
         map.put("sign", sign);
 
@@ -111,7 +111,7 @@ public class ServicePresenter implements ServiceContract.ServicePresent {
         map.put("method", BaseUrlUtil.GetInComeMethod);
         map.put("p", String.valueOf(p));
         map.put("pagesize", String.valueOf(pagesize));
-        map.put("token", SharedPrefsUtil.getString(context,"token",""));
+        map.put("token", SPUtils.getString(context,"token"));
         String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
         map.put("sign", sign);
 
@@ -143,7 +143,7 @@ public class ServicePresenter implements ServiceContract.ServicePresent {
         map.put("level", level);
         map.put("random", StringUtil.random());
         map.put("method", BaseUrlUtil.GetMyTeamDownMethod);
-        map.put("token", SharedPrefsUtil.getString(context,"token",""));
+        map.put("token", SPUtils.getString(context,"token"));
         String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
         map.put("sign", sign);
 
@@ -169,7 +169,7 @@ public class ServicePresenter implements ServiceContract.ServicePresent {
         map.put("no", BaseUrlUtil.NO);
         map.put("random", StringUtil.random());
         map.put("method", BaseUrlUtil.GetMyTeamMethod);
-        map.put("token", SharedPrefsUtil.getString(context,"token",""));
+        map.put("token", SPUtils.getString(context,"token"));
         String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
         map.put("sign", sign);
 
@@ -196,7 +196,7 @@ public class ServicePresenter implements ServiceContract.ServicePresent {
         map.put("no", BaseUrlUtil.NO);
         map.put("random", StringUtil.random());
         map.put("method", BaseUrlUtil.SendBalanceMsgMethod);
-        map.put("token", SharedPrefsUtil.getString(context,"token",""));
+        map.put("token", SPUtils.getString(context,"token"));
         String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
         map.put("sign", sign);
 
@@ -226,7 +226,7 @@ public class ServicePresenter implements ServiceContract.ServicePresent {
         map.put("no", BaseUrlUtil.NO);
         map.put("random", StringUtil.random());
         map.put("method", BaseUrlUtil.GetCashBalanceMethod);
-        map.put("token", SharedPrefsUtil.getString(context,"token",""));
+        map.put("token", SPUtils.getString(context,"token"));
         String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
         map.put("sign", sign);
 
@@ -255,7 +255,7 @@ public class ServicePresenter implements ServiceContract.ServicePresent {
         map.put("no", BaseUrlUtil.NO);
         map.put("random", StringUtil.random());
         map.put("method", BaseUrlUtil.GetCashBalanceDetailMethod);
-        map.put("token", SharedPrefsUtil.getString(context,"token",""));
+        map.put("token", SPUtils.getString(context,"token"));
         String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
         map.put("sign", sign);
 

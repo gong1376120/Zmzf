@@ -17,12 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hdyg.zhimaqb.R;
 import com.hdyg.zhimaqb.adapter.MyFragmentPagerAdapter;
 import com.hdyg.zhimaqb.fragment.HomeFragment;
 import com.hdyg.zhimaqb.fragment.HomeFragmentShangjia;
 import com.hdyg.zhimaqb.fragment.MessageFragment;
 import com.hdyg.zhimaqb.fragment.PartnerFragment;
-import com.hdyg.zhimaqb.fragment.Person1Fragment;
 import com.hdyg.zhimaqb.fragment.PersonFragment;
 import com.hdyg.zhimaqb.fragment.ServiceFragment;
 import com.hdyg.zhimaqb.fragment.ShareFragment;
@@ -31,8 +31,9 @@ import com.hdyg.zhimaqb.model.UserInfoCallBackModel;
 import com.hdyg.zhimaqb.model.VersionCallBackModel;
 import com.hdyg.zhimaqb.presenter.UserContract;
 import com.hdyg.zhimaqb.presenter.UserPresenter;
-import com.hdyg.zhimaqb.R;
 import com.hdyg.zhimaqb.ui.UpdateManager;
+import com.hdyg.zhimaqb.ui.dialog.RxDialogSure;
+import com.hdyg.zhimaqb.ui.dialog.RxDialogSureCancel;
 import com.hdyg.zhimaqb.util.BaseUrlUtil;
 import com.hdyg.zhimaqb.util.JsonUtil;
 import com.hdyg.zhimaqb.util.LogUtil;
@@ -40,6 +41,7 @@ import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.SharedPrefsUtil;
 import com.hdyg.zhimaqb.util.SjApplication;
 import com.hdyg.zhimaqb.util.StringUtil;
+import com.hdyg.zhimaqb.view.person.AuthenticationNameActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,9 +53,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, UserContract.UserMsgView {
 
-    private static final int REFRESH_COMPLETE = 0X110;
-    @BindView(R.id.view_pager)
-    ViewPager viewPager;
+
     @BindView(R.id.iv_home)
     ImageView ivHome;
     @BindView(R.id.tv_home)
@@ -84,13 +84,15 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     LinearLayout llBottom;
     @BindView(R.id.main_dg)
     LinearLayout mainDg;
+    @BindView(R.id.vp_main)
+    ViewPager viewPager;
 
     private HomeFragmentShangjia homeFragmentShangjia;
     private HomeFragment homeFragment;
     private ServiceFragment serviceFragment;
     private MessageFragment manageFragment;
     private PersonFragment personalFragment;
-    private Person1Fragment personalFragment1;
+
     private PartnerFragment partnerFragment;
     private ShareFragment mShareFragment;
 
@@ -109,30 +111,18 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         context = MainActivity.this;
-        SjApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
         initUrlData();
-
+        initLoginData();
     }
 
     /**
      * 获取基本页面的url和获取是否隐藏功能模块
      */
     private void initUrlData() {
-        mPresenter = new UserPresenter(this, context);
-        Map<String, String> map = new HashMap<>();
-        map.put("no", BaseUrlUtil.NO);
-        map.put("method", BaseUrlUtil.CommonURLMethod);
-        map.put("random", StringUtil.random());
-        String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
-        map.put("sign", sign);
-        mPresenter.getCommonURLData(map);
-
         isopen = SPUtils.getString(context, SPUtils.APP_IS_OPEM);
         if (isopen != null) {
-            LogUtil.i("isopen---" + isopen);
             if ("1".equals(isopen)) {
                 initView();
                 isLoading = true;
@@ -142,6 +132,15 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         } else {
             isLoading = false;
         }
+
+        mPresenter = new UserPresenter(this, context);
+        Map<String, String> map = new HashMap<>();
+        map.put("no", BaseUrlUtil.NO);
+        map.put("method", BaseUrlUtil.CommonURLMethod);
+        map.put("random", StringUtil.random());
+        String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
+        map.put("sign", sign);
+        mPresenter.getCommonURLData(map);
 
     }
 
@@ -161,28 +160,29 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         return version;
     }
 
-    private void getData() {
+    private void initLoginData() {
         Map<String, String> map = new HashMap<>();
-        map.put("token", SharedPrefsUtil.getString(context, "token", ""));
+        map.put("token", SPUtils.getString(context, "token"));
         map.put("random", StringUtil.random());
         map.put("no", BaseUrlUtil.NO);
         map.put("method", BaseUrlUtil.GetUserMsgMethod);
         String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
         map.put("sign", sign);
-        LogUtil.i("token"+SharedPrefsUtil.getString(context, "token", ""));
+
         //调用获取个人信息方法
         mPresenter.getUserMsgData(map);
+
+        version = getVersionName();
+        mPresenter.getVersionData();
     }
 
     private void initView() {
-
-
         homeFragmentShangjia = new HomeFragmentShangjia();
         homeFragment = new HomeFragment();
         serviceFragment = new ServiceFragment();
         manageFragment = new MessageFragment();
         personalFragment = new PersonFragment();
-        personalFragment1 = new Person1Fragment();
+
         partnerFragment = new PartnerFragment();
         mShareFragment = new ShareFragment();
         ArrayList<Fragment> fragmentList = new ArrayList<>();
@@ -193,9 +193,10 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         } else {
             fragmentList.add(homeFragmentShangjia);
         }
-     //   fragmentList.add(mShareFragment);
+        fragmentList.add(mShareFragment);
+        // fragmentList.add(manageFragment);
+        //  fragmentList.add(personalFragment);
         fragmentList.add(personalFragment);
-        fragmentList.add(personalFragment1);
         //  fragmentList.add(partnerFragment);
 
 
@@ -245,9 +246,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         ivHome.setSelected(true);
 
 
-        version = getVersionName();
-        mPresenter.getVersionData();
-        getData();
     }
 
 
@@ -276,58 +274,43 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         Log.d("czb", "第几项=" + viewPager.getCurrentItem());
     }
 
-    // 刷新Fragment
-//    private Handler mHandler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case REFRESH_COMPLETE:
-//                    mSwipeLayout.setRefreshing(false);
-//                    adapter.update(viewPager.getCurrentItem());
-//                    break;
-//
-//            }
-//        }
-//    };
-
     @Override
     public void onGetCommonURLData(String str) {
-
-        LogUtil.i(str);
-
+        LogUtil.i("通用url---" + str);
         if (!TextUtils.isEmpty(str)) {
             CommonURLCallBackModel commonURLCallBackModel = JsonUtil.parseJsonWithGson(str, CommonURLCallBackModel.class);
             if (commonURLCallBackModel.getStatus() == BaseUrlUtil.STATUS) {
                 CommonURLCallBackModel.CommonURLModel commonURLModel = commonURLCallBackModel.getData();
-                SPUtils.put(context, SPUtils.URL_ABOUT_US, commonURLModel.getAboutus());
-                SPUtils.put(context, SPUtils.URL_LAWS, commonURLModel.getLaws());
-                SPUtils.put(context, SPUtils.URL_HELP, commonURLModel.getHelpcenters());
-                SPUtils.put(context, SPUtils.URL_REGISTS, commonURLModel.getRegists());
-                SPUtils.put(context, SPUtils.URL_QUESTION, commonURLModel.getQuestions());
-                SPUtils.put(context, SPUtils.URL_QR_CODE, commonURLModel.getQrCode());
-                SPUtils.put(context, SPUtils.APP_IS_OPEM, commonURLModel.getIsopen());
-
-
-                SharedPrefsUtil.putString2(context, "aboutus", commonURLCallBackModel.getData().getAboutus());//关于我们
-                SharedPrefsUtil.putString2(context, "laws", commonURLCallBackModel.getData().getLaws());      //费率说明
-                //           SharedPrefsUtil.putString2(context, "tuiguang", commonURLCallBackModel.getData().getLaws());  //法律条款
-                SharedPrefsUtil.putString2(context, "helpcenter", commonURLCallBackModel.getData().getHelpcenters());//帮助中心
-//                SharedPrefsUtil.putString2(context,"credit",commonURLCallBackModel.getData().getCredits());//征信授权协议
-                Log.d("czb", "regists ==== " + commonURLCallBackModel.getData().getRegists());
-                SharedPrefsUtil.putString2(context, "userreg", commonURLCallBackModel.getData().getRegists());//用户注册协议
-//                SharedPrefsUtil.putString2(context,"loans",commonURLCallBackModel.getData().getLoans());//贷款协议
-                SharedPrefsUtil.putString2(context, "xinshou", commonURLCallBackModel.getData().getQuestions());//常见问题
-//                SharedPrefsUtil.putString2(context,"vipinfos",commonURLCallBackModel.getData().getVipinfos());//会员中心
-//                SharedPrefsUtil.putString2(context,"tradingrules",commonURLCallBackModel.getData().getTradingrules());//交易规则
-                SharedPrefsUtil.putString2(context, "isopen", commonURLCallBackModel.getData().getIsopen());//模块隐藏或者显示  1表示显示  其他表示隐藏
-//                SharedPrefsUtil.putString2(context,"isopen","1");//模块隐藏或者显示  1表示显示  其他表示隐藏
-                SharedPrefsUtil.putString2(context, "qrcode", commonURLCallBackModel.getData().getQrCode());//二维码
-//                SharedPrefsUtil.putString2(context,"is_open",commonURLCallBackModel.getData().getIsopen());//模块隐藏或者显示  1表示显示  其他表示隐藏
+                SPUtils.put(context, SPUtils.URL_ABOUT_US, commonURLModel.getAboutus());//关于我们
+                SPUtils.put(context, SPUtils.URL_LAWS, commonURLModel.getLaws());//费率说明
+                SPUtils.put(context, SPUtils.URL_HELP, commonURLModel.getHelpcenters());//帮助中心
+                SPUtils.put(context, SPUtils.URL_REGISTS, commonURLModel.getRegists());//用户注册协议
+                SPUtils.put(context, SPUtils.URL_QUESTION, commonURLModel.getQuestions());//常见问题
+                SPUtils.put(context, SPUtils.URL_QR_CODE, commonURLModel.getQrCode());//二维码
+                SPUtils.put(context, SPUtils.APP_IS_OPEM, commonURLModel.getIsopen());//模块隐藏或者显示  1表示显示  其他表示隐藏
                 isopen = commonURLCallBackModel.getData().getIsopen();
-
             }
             if (!isLoading) {
                 initView();
+            }
+            int size = commonURLCallBackModel.getData().getMsg().size();
+            for (int i = size - 1; i >= 0; i--) {
+                CommonURLCallBackModel.CommonURLModel.MsgBean msgBean = commonURLCallBackModel.getData().getMsg().get(i);
+                final RxDialogSure rxDialogSure = new RxDialogSure(MainActivity.this);
+                rxDialogSure.setTitle(msgBean.getTitle());
+                rxDialogSure.setContent(msgBean.getContent());
+                rxDialogSure.show();
+                rxDialogSure.getSureView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        rxDialogSure.dismiss();
+                    }
+                });
+                if (i == size - 1) {
+                    rxDialogSure.getSureView().setText("确认");
+                } else {
+                    rxDialogSure.getSureView().setText("下一条");
+                }
             }
         }
     }
@@ -339,27 +322,57 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      */
     @Override
     public void onGetUserMsgData(String str) {
-        Log.d("czb", "获取个人信息回调接口======" + str);
+        LogUtil.i("获取个人信息回调接口======" + str);
         try {
             userInfoCallBackModel = JsonUtil.parseJsonWithGson(str, UserInfoCallBackModel.class);
             if (userInfoCallBackModel.getStatus() == BaseUrlUtil.STATUS) {
-                SharedPrefsUtil.putString(context, "login_name", userInfoCallBackModel.getData().getLogin_name());//登录名
-                SharedPrefsUtil.putString(context, "level_name", userInfoCallBackModel.getData().getLevel_name());//会员等级名称
-                SharedPrefsUtil.putString(context, "bankstatus", String.valueOf(userInfoCallBackModel.getData().getBankstatus()));//是否有添加银行卡
-                SharedPrefsUtil.putString(context, "real", String.valueOf(userInfoCallBackModel.getData().getReal()));//是否已实名
-                SharedPrefsUtil.putString(context, "user_id", userInfoCallBackModel.getData().getUser_id());
-                SharedPrefsUtil.putString(context, "sharetitle", userInfoCallBackModel.getData().getSharetitle());//分享标题
-                SharedPrefsUtil.putString(context, "sharecontent", userInfoCallBackModel.getData().getSharecontent());//分享内容
-                SharedPrefsUtil.putString(context, "shareregisterurl", userInfoCallBackModel.getData().getShareregisterurl());//分享注册链接
-                SharedPrefsUtil.putString(context, "merchant", userInfoCallBackModel.getData().getMerchant_confirm());//商户入驻状态码
-                SharedPrefsUtil.putString(context, "img_confirm", userInfoCallBackModel.getData().getImg_confirm());  //个人认证状态码
+                SPUtils.put(context, "login_name", userInfoCallBackModel.getData().getLogin_name());//登录名
+                SPUtils.put(context, "level_name", userInfoCallBackModel.getData().getLevel_name());//会员等级名称
+                SPUtils.put(context, "bankstatus", String.valueOf(userInfoCallBackModel.getData().getBankstatus()));//是否有添加银行卡
+                SPUtils.put(context, "real", String.valueOf(userInfoCallBackModel.getData().getReal()));//是否已实名
+                SPUtils.put(context, "user_id", userInfoCallBackModel.getData().getUser_id());
+                SPUtils.put(context, "sharetitle", userInfoCallBackModel.getData().getSharetitle());//分享标题
+                SPUtils.put(context, "sharecontent", userInfoCallBackModel.getData().getSharecontent());//分享内容
+                SPUtils.put(context, "shareregisterurl", userInfoCallBackModel.getData().getShareregisterurl());//分享注册链接
+                SPUtils.put(context, "merchant", userInfoCallBackModel.getData().getMerchant_confirm());//商户入驻状态码
+                SPUtils.put(context, "img_confirm", userInfoCallBackModel.getData().getImg_confirm());  //个人认证状态码
+                SPUtils.put(context, "username", userInfoCallBackModel.getData().getUsername());  //个人昵称
+                SPUtils.put(context, "levle1_name", userInfoCallBackModel.getData().getLevle1_name());  //推荐人姓名
+                SPUtils.put(context, "level1_phone", userInfoCallBackModel.getData().getLevel1_phone());  //推荐人电话
+
+                String img_confirm = userInfoCallBackModel.getData().getImg_confirm();
+                LogUtil.i("img_confirm" + img_confirm);
+                if ("0".equals(img_confirm)) {
+                    //  LogUtil.i("img_confirm" + img_confirm);
+                    final RxDialogSureCancel rxDialogSure = new RxDialogSureCancel(MainActivity.this);
+                    rxDialogSure.setTitle("温馨提示");
+                    rxDialogSure.setContent("您当前未完善信息，是否前往完善信息？");
+                    rxDialogSure.show();
+                    rxDialogSure.getSureView().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(MainActivity.this, AuthenticationNameActivity.class);
+                            startActivity(intent);
+                            rxDialogSure.dismiss();
+                        }
+                    });
+
+                    rxDialogSure.getCancelView().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rxDialogSure.dismiss();
+                        }
+                    });
+
+                }
+
             } else if (userInfoCallBackModel.getStatus() == 500) {
                 toastNotifyShort("该账号已登录，请重新登录");
                 Intent intent = new Intent(this, UserLoginActivity.class);
                 startActivity(intent);
             }
         } catch (Exception e) {
-            Log.d("czb", "获取个人信息异常===" + e.toString());
+            LogUtil.i("获取个人信息异常===" + e.toString());
         }
     }
 
@@ -370,7 +383,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      */
     @Override
     public void onGetVersionData(String str) {
-        Log.d("czb", "版本信息回调数据===" + str);
+        LogUtil.i("版本信息回调数据===" + str);
         try {
             final VersionCallBackModel versionCallBackModel = JsonUtil.parseJsonWithGson(str, VersionCallBackModel.class);
             if (versionCallBackModel.getStatus() == BaseUrlUtil.STATUS) {
@@ -381,7 +394,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 }
             }
         } catch (Exception e) {
-            Log.d("czb", "版本信息回调异常==" + e.toString());
+            LogUtil.i("版本信息回调异常==" + e.toString());
         }
     }
 

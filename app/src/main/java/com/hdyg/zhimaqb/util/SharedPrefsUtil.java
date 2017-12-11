@@ -31,82 +31,89 @@ public class SharedPrefsUtil {
     }
 
     public static void putValueInt(Context context, String key, int value) {
-        SharedPreferences.Editor sp =  context.getSharedPreferences(SETTING, Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor sp = context.getSharedPreferences(SETTING, Context.MODE_PRIVATE).edit();
         sp.putInt(key, value);
         sp.commit();
     }
-    public static void putBooleanValue(Context context,String key, boolean value) {
-        SharedPreferences.Editor sp =  context.getSharedPreferences(SETTING, Context.MODE_PRIVATE).edit();
+
+    public static void putBooleanValue(Context context, String key, boolean value) {
+        SharedPreferences.Editor sp = context.getSharedPreferences(SETTING, Context.MODE_PRIVATE).edit();
         sp.putBoolean(key, value);
         sp.commit();
     }
 
     /**
-     *
      * @param context
      * @param key
      * @param value
      */
-    public static void putString(Context context,String key, String value) {
-        SharedPreferences.Editor sp =  context.getSharedPreferences(SETTING, Context.MODE_PRIVATE).edit();
+    public static void putString(Context context, String key, String value) {
+        SharedPreferences.Editor sp = context.getSharedPreferences(SETTING, Context.MODE_PRIVATE).edit();
+        sp.putString(key, value);
+        sp.apply();
+    }
+
+    public static void putString2(Context context, String key, String value) {
+        SharedPreferences.Editor sp = context.getSharedPreferences(USERINFO, Context.MODE_PRIVATE).edit();
         sp.putString(key, value);
         sp.commit();
     }
 
-    public static void putString2(Context context,String key, String value) {
-        SharedPreferences.Editor sp =  context.getSharedPreferences(USERINFO, Context.MODE_PRIVATE).edit();
-        sp.putString(key, value);
-        sp.commit();
-    }
-    public static void putStringIDCardInfo(Context context,String key, String value) {
-        SharedPreferences.Editor sp =  context.getSharedPreferences(IDCARDINFO, Context.MODE_PRIVATE).edit();
+    public static void putStringIDCardInfo(Context context, String key, String value) {
+        SharedPreferences.Editor sp = context.getSharedPreferences(IDCARDINFO, Context.MODE_PRIVATE).edit();
         sp.putString(key, value);
         sp.commit();
     }
 
-    public static int getIntValue(Context context,String key, int defValue) {
-        SharedPreferences sp =  context.getSharedPreferences(SETTING, Context.MODE_PRIVATE);
+    public static int getIntValue(Context context, String key, int defValue) {
+        SharedPreferences sp = context.getSharedPreferences(SETTING, Context.MODE_PRIVATE);
         int value = sp.getInt(key, defValue);
         return value;
     }
-    public static boolean getBooleanValue(Context context,String key, boolean defValue) {
-        SharedPreferences sp =  context.getSharedPreferences(SETTING, Context.MODE_PRIVATE);
+
+    public static boolean getBooleanValue(Context context, String key, boolean defValue) {
+        SharedPreferences sp = context.getSharedPreferences(SETTING, Context.MODE_PRIVATE);
         boolean value = sp.getBoolean(key, defValue);
         return value;
     }
-    public static String getString(Context context,String key, String defValue) {
-        SharedPreferences sp =  context.getSharedPreferences(SETTING, Context.MODE_PRIVATE);
+
+    public static String getString(Context context, String key, String defValue) {
+        SharedPreferences sp = context.getSharedPreferences(SETTING, Context.MODE_PRIVATE);
         String value = sp.getString(key, defValue);
         return value;
     }
 
-    public static String getString2(Context context,String key, String defValue) {
-        SharedPreferences sp =  context.getSharedPreferences(USERINFO, Context.MODE_PRIVATE);
+    public static String getString2(Context context, String key, String defValue) {
+        SharedPreferences sp = context.getSharedPreferences(USERINFO, Context.MODE_PRIVATE);
         String value = sp.getString(key, defValue);
         return value;
     }
-    public static String getStringIDCardInfo(Context context,String key, String defValue) {
-        SharedPreferences sp =  context.getSharedPreferences(IDCARDINFO, Context.MODE_PRIVATE);
+
+    public static String getStringIDCardInfo(Context context, String key, String defValue) {
+        SharedPreferences sp = context.getSharedPreferences(IDCARDINFO, Context.MODE_PRIVATE);
         String value = sp.getString(key, defValue);
         return value;
     }
 
     /**
      * 清空用户信息
+     *
      * @param context
      */
-    public static void clearSharedPreference(Context context){
-        SharedPreferences sp = context.getSharedPreferences(SETTING,Context.MODE_PRIVATE);
+    public static void clearSharedPreference(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(SETTING, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();
         editor.commit();
     }
+
     /**
      * 清空用户信息
+     *
      * @param context
      */
-    public static void clearSharedPreference2(Context context){
-        SharedPreferences sp = context.getSharedPreferences(USERINFO,Context.MODE_PRIVATE);
+    public static void clearSharedPreference2(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(USERINFO, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();
         editor.commit();
@@ -114,10 +121,11 @@ public class SharedPrefsUtil {
 
     /**
      * 清空身份证信息
+     *
      * @param context
      */
-    public static void clearIdCardInfo(Context context){
-        SharedPreferences sp = context.getSharedPreferences(IDCARDINFO,Context.MODE_PRIVATE);
+    public static void clearIdCardInfo(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(IDCARDINFO, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();
         editor.commit();
@@ -125,6 +133,7 @@ public class SharedPrefsUtil {
 
     /**
      * 存放图片
+     *
      * @param context
      * @param key
      * @param bitmap
@@ -150,6 +159,7 @@ public class SharedPrefsUtil {
 
     /**
      * 提取图片
+     *
      * @param context
      * @param key
      * @param defaultValue

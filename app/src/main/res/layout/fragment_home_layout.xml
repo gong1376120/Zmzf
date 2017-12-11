@@ -129,7 +129,7 @@
                             android:layout_marginLeft="10dp"
                             android:background="@null"
                             android:cursorVisible="false"
-                            android:hint="00.00"
+                            android:hint="0.00"
                             android:inputType="phone"
                             android:maxLength="10"
                             android:textColor="@color/main_color"

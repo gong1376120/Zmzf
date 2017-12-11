@@ -1,10 +1,12 @@
 package com.hdyg.zhimaqb.view.person;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +19,21 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.hdyg.zhimaqb.adapter.GroupAdapter1;
-import com.hdyg.zhimaqb.model.BankModel;
+import com.bigkoo.pickerview.OptionsPickerView;
+import com.google.gson.Gson;
 import com.hdyg.zhimaqb.R;
+import com.hdyg.zhimaqb.adapter.GroupAdapter1;
+import com.hdyg.zhimaqb.model.AreaModel;
+import com.hdyg.zhimaqb.model.BankModel;
 import com.hdyg.zhimaqb.util.BaseUrlUtil;
 import com.hdyg.zhimaqb.util.JsonUtil;
-import com.hdyg.zhimaqb.util.SharedPrefsUtil;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.StringUtil;
 import com.hdyg.zhimaqb.util.okhttp.CallBackUtil;
 import com.hdyg.zhimaqb.util.okhttp.OkhttpUtil;
 import com.hdyg.zhimaqb.view.BaseActivity;
-import com.lljjcoder.citypickerview.widget.CityPicker;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,6 +44,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Call;
 
 /**
@@ -46,14 +52,8 @@ import okhttp3.Call;
  */
 
 public class ResetBankCardActivity extends BaseActivity implements View.OnClickListener {
-    @BindView(R.id.person_top_ll)
-    LinearLayout personTopLl;
-    @BindView(R.id.person_top_tv)
-    TextView personTopTv;
-    @BindView(R.id.sava_info_tv)
-    TextView savaInfoTv;
-    @BindView(R.id.save_info_ll)
-    LinearLayout saveInfoLl;
+
+
     @BindView(R.id.et_card_no)
     EditText etCardNo;      // 银行卡号
     @BindView(R.id.et_bank_name)
@@ -80,9 +80,17 @@ public class ResetBankCardActivity extends BaseActivity implements View.OnClickL
     LinearLayout llBankAddr;
     @BindView(R.id.ll_bank_deposit)
     LinearLayout llBankDeposit;
+    @BindView(R.id.top_left_ll)
+    LinearLayout mTopLeftLl;
+    @BindView(R.id.top_context)
+    TextView mTopContext;
+    @BindView(R.id.top_right_tv)
+    TextView mTopRightTv;
+    @BindView(R.id.top_right_ll)
+    LinearLayout mTopRightLl;
     private Context context;
     private String token;
-    private String province_name, city_name, bankCode, county_name,accountNo,
+    private String province_name, city_name, bankCode, county_name, accountNo,
             bankName, openBranch_code, openBranch, phone, code, idCard, accountName;
     private String province;    // 省
     private String city;        // 市
@@ -96,6 +104,10 @@ public class ResetBankCardActivity extends BaseActivity implements View.OnClickL
     private Intent intent;
     private Bundle bundle;
 
+    private ArrayList<AreaModel> options1Items = new ArrayList<>();
+    private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
+    private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +115,7 @@ public class ResetBankCardActivity extends BaseActivity implements View.OnClickL
         ButterKnife.bind(this);
 
         context = ResetBankCardActivity.this;
+        initJsonData();
         getData();
         initView();
     }
@@ -113,10 +126,11 @@ public class ResetBankCardActivity extends BaseActivity implements View.OnClickL
     private void initView() {
         String title = getIntent().getStringExtra("topContext");
         title = title == null ? "" : title;
-        personTopTv.setText(title);
-        personTopLl.setVisibility(View.VISIBLE);
 
-        token = SharedPrefsUtil.getString(context, "token", "");
+        mTopContext.setText("银行卡换绑");
+        mTopRightLl.setVisibility(View.INVISIBLE);
+
+        token = SPUtils.getString(context, "token");
         idCard = getIntent().getStringExtra("idCard");
         idCard = idCard == null ? "" : idCard;
         accountName = getIntent().getStringExtra("accountName");
@@ -196,14 +210,13 @@ public class ResetBankCardActivity extends BaseActivity implements View.OnClickL
         OkhttpUtil.okHttpPost(BaseUrlUtil.URL, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
-
             }
 
             @Override
             public void onResponse(String response) {
                 Log.d("cwj", "换绑银行卡回调：" + response);
                 try {
-                    JSONObject temp = new JSONObject( response);
+                    JSONObject temp = new JSONObject(response);
                     int status = temp.getInt("status");
                     String message = temp.getString("message");
                     toastNotifyShort(message);
@@ -217,6 +230,7 @@ public class ResetBankCardActivity extends BaseActivity implements View.OnClickL
     }
 
 
+    @Override
     public void onClick(View v) {
         bankCode = bank_code;
         bankName = etBankName.getText().toString();
@@ -227,13 +241,11 @@ public class ResetBankCardActivity extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.ll_bank_name:
                 // 所属银行
-                if (bankNameModelList != null) {
-                    showWindow(v);
-                }
+                showBankDialog();
                 break;
             case R.id.ll_bank_addr:
                 // 开户行所在省市区
-                selectAddress();
+                showPickerView();
                 break;
             case R.id.ll_bank_deposit:
                 // 开户行
@@ -241,7 +253,7 @@ public class ResetBankCardActivity extends BaseActivity implements View.OnClickL
                     toastNotifyShort("所属银行不能为空");
                     return;
                 }
-                intent = new Intent(context, SearchActivity.class);
+                intent = new Intent(context, BankSearchActivity.class);
                 bundle = new Bundle();
                 bundle.putString("code", bank_simple_code.trim());
                 bundle.putString("method", "get_bank_branch");
@@ -281,68 +293,23 @@ public class ResetBankCardActivity extends BaseActivity implements View.OnClickL
                 }
                 ResetBankCard();
                 break;
+            default:
+                break;
         }
     }
 
-    /**
-     * 显示悬浮窗  银行名字
-     *
-     * @param parent
-     */
-    private void showWindow(View parent) {
-
-        if (popupWindow == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.popup_list_bank, null);
-            listView = (ListView) view.findViewById(R.id.popup_listview);
-            GroupAdapter1 groupAdapter = new GroupAdapter1(this, bankNameModelList);
-            listView.setAdapter(groupAdapter);
-            //获取屏幕宽度
-            int width = StringUtil.getWindowWidth(context);
-            int height = StringUtil.getWindowHeight(context);
-            // 创建一个PopuWidow对象
-            popupWindow = new PopupWindow(view, width, height / 3);
-        }
-
-        // 使其聚集
-        popupWindow.setFocusable(true);
-        // 设置允许在外点击消失
-        popupWindow.setOutsideTouchable(true);
-        // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        // 显示的位置为:屏幕的宽度的一半-PopupWindow的高度的一半
-        int xPos = windowManager.getDefaultDisplay().getWidth() / 2
-                - popupWindow.getWidth() / 2;
-        popupWindow.showAsDropDown(parent, xPos, 0);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view,
-                                    int position, long id) {
-                etBankName.setText(bankNameModelList.get(position).getBank_name());
-                bank_simple_code = bankNameModelList.get(position).getBank_simple_code();
-                bank_code = bankNameModelList.get(position).getBank_code();
-                popupWindow.dismiss();
-                if (popupWindow != null) {
-                    popupWindow.dismiss();
-                }
-            }
-        });
-    }
 
 
     //获取银行数据
     private void getData() {
 
-        Map<String,String> map = new HashMap<>();
-        map.put("method",BaseUrlUtil.GetBankDataMethod);
-        map.put("no",BaseUrlUtil.NO);
-        map.put("random",StringUtil.random());
-        map.put("token",SharedPrefsUtil.getString(context,"token",null));
-        String sign = StringUtil.Md5Str(map,BaseUrlUtil.KEY);
-        map.put("sign",sign);
+        Map<String, String> map = new HashMap<>();
+        map.put("method", BaseUrlUtil.GetBankDataMethod);
+        map.put("no", BaseUrlUtil.NO);
+        map.put("random", StringUtil.random());
+        map.put("token", SPUtils.getString(context, "token"));
+        String sign = StringUtil.Md5Str(map, BaseUrlUtil.KEY);
+        map.put("sign", sign);
         OkhttpUtil.okHttpPost(BaseUrlUtil.URL, map, new CallBackUtil.CallBackString() {
             @Override
             public void onFailure(Call call, Exception e) {
@@ -367,42 +334,26 @@ public class ResetBankCardActivity extends BaseActivity implements View.OnClickL
         });
     }
 
-    /**
-     * 省市区三级联动  方法
-     */
-    private void selectAddress() {
-        CityPicker cityPicker = new CityPicker.Builder(context)
-                .textSize(14)
-                .title("地址选择")
-                .titleBackgroundColor("#FFFFFF")
-                .province("福建省")
-                .city("厦门市")
-                .district("湖里区")
-                .textColor(Color.parseColor("#000000"))
-                .provinceCyclic(true)
-                .cityCyclic(false)
-                .districtCyclic(false)
-                .visibleItemsCount(7)
-                .itemPadding(10)
-                .onlyShowProvinceAndCity(false)
-                .build();
-        cityPicker.show();
-        //监听方法，获取选择结果
-        cityPicker.setOnCityItemClickListener(new CityPicker.OnCityItemClickListener() {
+    private void showBankDialog() {
+
+        int itemLength = bankNameModelList.size();
+        String[] items = new String[itemLength];
+
+        for (int i = 0; i < itemLength; i++) {
+            items[i] = bankNameModelList.get(i).getBank_name();
+        }
+
+        AlertDialog.Builder bankDialog = new AlertDialog.Builder(ResetBankCardActivity.this);
+        bankDialog.setTitle("选择银行类型");
+        bankDialog.setItems(items, new DialogInterface.OnClickListener() {
             @Override
-            public void onSelected(String... citySelected) {
-                //省份
-                province = citySelected[0];
-                //城市
-                city = citySelected[1];
-                //区县（如果设定了两级联动，那么该项返回空）
-                district = citySelected[2];
-                //邮编
-                String code = citySelected[3];
-                //为TextView赋值
-                etBankAddr.setText(province.trim() + "-" + city.trim() + "-" + district.trim());
+            public void onClick(DialogInterface dialog, int which) {
+                etBankName.setText(bankNameModelList.get(which).getBank_name());
+                bank_simple_code = bankNameModelList.get(which).getBank_simple_code();
+                bank_code = bankNameModelList.get(which).getBank_code();
             }
         });
+        bankDialog.show();
     }
 
     @Override
@@ -418,5 +369,91 @@ public class ResetBankCardActivity extends BaseActivity implements View.OnClickL
             }
         }
 
+    }
+
+    private void showPickerView() {
+        OptionsPickerView pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                //返回的分别是三个级别的选中位置
+                String tx = options1Items.get(options1).getPickerViewText() +
+                        options2Items.get(options1).get(options2) +
+                        options3Items.get(options1).get(options2).get(options3);
+
+                province = options1Items.get(options1).getPickerViewText();
+                //城市
+                city = options2Items.get(options1).get(options2);
+                //区县（如果设定了两级联动，那么该项返回空）
+                district = options3Items.get(options1).get(options2).get(options3);
+                //为TextView赋值
+                etBankAddr.setText(province.trim() + "-" + city.trim() + "-" + district.trim());
+            }
+        })
+
+                .setTitleText("地区选择")
+                .setDividerColor(ContextCompat.getColor(ResetBankCardActivity.this, R.color.gray))
+                .setTextColorCenter(ContextCompat.getColor(ResetBankCardActivity.this, R.color.main_color))
+                .setCancelColor(ContextCompat.getColor(ResetBankCardActivity.this, R.color.gray))
+                .setSubmitColor(ContextCompat.getColor(ResetBankCardActivity.this, R.color.gray))
+                .setContentTextSize(20)
+                .build();
+        //三级选择器
+        pvOptions.setPicker(options1Items, options2Items, options3Items);
+        pvOptions.show();
+    }
+
+    private void initJsonData() {
+        String jsonData = JsonUtil.getJson(this, "province.json");
+        //用Gson 转成实体
+        ArrayList<AreaModel> jsonBean = parseData(jsonData);
+        options1Items = jsonBean;
+        for (int i = 0; i < jsonBean.size(); i++) {//遍历省份
+            ArrayList<String> CityList = new ArrayList<>();//该省的城市列表（第二级）
+            ArrayList<ArrayList<String>> Province_AreaList = new ArrayList<>();//该省的所有地区列表（第三极）
+            for (int c = 0; c < jsonBean.get(i).getCityList().size(); c++) {//遍历该省份的所有城市
+                String CityName = jsonBean.get(i).getCityList().get(c).getName();
+                CityList.add(CityName);//添加城市
+
+                ArrayList<String> City_AreaList = new ArrayList<>();//该城市的所有地区列表
+
+                //如果无地区数据，建议添加空字符串，防止数据为null 导致三个选项长度不匹配造成崩溃
+                if (jsonBean.get(i).getCityList().get(c).getArea() == null
+                        || jsonBean.get(i).getCityList().get(c).getArea().size() == 0) {
+                    City_AreaList.add("");
+                } else {
+                    for (int d = 0; d < jsonBean.get(i).getCityList().get(c).getArea().size(); d++) {
+                        //该城市对应地区所有数据
+                        String AreaName = jsonBean.get(i).getCityList().get(c).getArea().get(d);
+                        //添加该城市所有地区数据
+                        City_AreaList.add(AreaName);
+                    }
+                }
+                //添加该省所有地区数据
+                Province_AreaList.add(City_AreaList);
+            }
+            options2Items.add(CityList);
+            options3Items.add(Province_AreaList);
+        }
+
+    }
+
+    public ArrayList<AreaModel> parseData(String result) {
+        ArrayList<AreaModel> detail = new ArrayList<>();
+        try {
+            JSONArray data = new JSONArray(result);
+            Gson gson = new Gson();
+            for (int i = 0; i < data.length(); i++) {
+                AreaModel entity = gson.fromJson(data.optJSONObject(i).toString(), AreaModel.class);
+                detail.add(entity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return detail;
+    }
+
+    @OnClick(R.id.top_left_ll)
+    public void onViewClicked() {
+        finish();
     }
 }

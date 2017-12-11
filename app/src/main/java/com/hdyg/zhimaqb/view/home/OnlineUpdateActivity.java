@@ -30,8 +30,7 @@ import com.hdyg.zhimaqb.ui.PayTypePopupWindow;
 import com.hdyg.zhimaqb.util.BaseUrlUtil;
 import com.hdyg.zhimaqb.util.DataUtil;
 import com.hdyg.zhimaqb.util.JsonUtil;
-import com.hdyg.zhimaqb.util.SharedPrefsUtil;
-import com.hdyg.zhimaqb.util.SjApplication;
+import com.hdyg.zhimaqb.util.SPUtils;
 import com.hdyg.zhimaqb.util.StringUtil;
 import com.hdyg.zhimaqb.util.okhttp.CallBackUtil;
 import com.hdyg.zhimaqb.util.okhttp.OkhttpUtil;
@@ -84,8 +83,8 @@ public class OnlineUpdateActivity extends BaseActivity implements HomeContract.P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_update);
-        SjApplication.getInstance().addActivity(this);//activity单例模式
         ButterKnife.bind(this);
+
         context = OnlineUpdateActivity.this;
         initView();
     }
@@ -116,7 +115,7 @@ public class OnlineUpdateActivity extends BaseActivity implements HomeContract.P
             Map<String, String> map = new HashMap<>();
             map.put("method", "get_upgrade_url");
             map.put("type", payType);
-            map.put("token", SharedPrefsUtil.getString(context, "token", ""));
+            map.put("token", SPUtils.getString(context, "token"));
             map.put("no", BaseUrlUtil.NO);
             map.put("random", StringUtil.random());
             map.put("level", onLineVIPModel.getLevel());
@@ -132,7 +131,7 @@ public class OnlineUpdateActivity extends BaseActivity implements HomeContract.P
         adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int pos) {
-                if (list.get(pos).getLevel().equals(SharedPrefsUtil.getString(context, "level_name", null))) {
+                if (list.get(pos).getLevel().equals(SPUtils.getString(context, "level_name"))) {
                     toastNotifyShort("会员是当前等级，无法充值");
                 } else {
 //                    getUrl(pos);
@@ -155,7 +154,7 @@ public class OnlineUpdateActivity extends BaseActivity implements HomeContract.P
                     // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
                     popupWindow.setBackgroundDrawable(new BitmapDrawable());
                     //设置SelectPicPopupWindow弹出窗体动画效果
-                    popupWindow.setAnimationStyle(R.style.AnimBottom);
+                    popupWindow.setAnimationStyle(R.style.Animation);
                     // 实例化一个ColorDrawable颜色为半透明
                     ColorDrawable dw = new ColorDrawable(0x00000000);
                     //设置SelectPicPopupWindow弹出窗体的背景
@@ -195,7 +194,7 @@ public class OnlineUpdateActivity extends BaseActivity implements HomeContract.P
         Map<String, String> map = new HashMap<>();
         map.put("method", BaseUrlUtil.GetUpgradeUrlMethod);
         map.put("type", "weixin");
-        map.put("token", SharedPrefsUtil.getString(context, "token", null));
+        map.put("token", SPUtils.getString(context, "token"));
         map.put("no", BaseUrlUtil.NO);
         map.put("random", StringUtil.random());
         map.put("level", list.get(pos).getLevel());

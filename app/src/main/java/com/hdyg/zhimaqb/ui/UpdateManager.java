@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.hdyg.zhimaqb.R;
+import com.hdyg.zhimaqb.ui.dialog.RxDialogSureCancel;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -46,7 +48,7 @@ public class UpdateManager {
 
     private Dialog downloadDialog;
     /* 下载包安装路径 */
-    private static final String savePath = "/sdcard/updatedemo/";
+    private static final String savePath = Environment.getExternalStorageDirectory() + "/Download/";
 
     private static final String saveFileName = savePath + "UpdateDemoRelease.apk";
 
@@ -64,7 +66,7 @@ public class UpdateManager {
 
     private boolean interceptFlag = false;
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case DOWN_UPDATE:
@@ -87,39 +89,59 @@ public class UpdateManager {
     }
 
     //外部接口让主Activity调用
-    public void checkUpdateInfo(){
+    public void checkUpdateInfo() {
         showNoticeDialog();
     }
 
 
-    private void showNoticeDialog(){
-        Builder builder = new Builder(mContext);
-        builder.setTitle("软件版本更新");
-        builder.setMessage(updateMsg);
-        builder.setPositiveButton("下载", new OnClickListener() {
+    private void showNoticeDialog() {
+        final RxDialogSureCancel rxDialogSureCancel = new RxDialogSureCancel(mContext);
+        rxDialogSureCancel.setTitle("温馨提示");
+        rxDialogSureCancel.setContent("软件版本更新");
+        rxDialogSureCancel.getSureView().setText("下载");
+        rxDialogSureCancel.getCancelView().setText("以后再说");
+        rxDialogSureCancel.show();
+        rxDialogSureCancel.getSureView().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View v) {
+                rxDialogSureCancel.dismiss();
                 showDownloadDialog();
             }
         });
-        builder.setNegativeButton("以后再说", new OnClickListener() {
+        rxDialogSureCancel.getCancelView().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onClick(View v) {
+                rxDialogSureCancel.dismiss();
             }
         });
-        noticeDialog = builder.create();
-        noticeDialog.show();
+
+//        Builder builder = new Builder(mContext);
+//        builder.setTitle("软件版本更新");
+//        builder.setMessage(updateMsg);
+//        builder.setPositiveButton("下载", new OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//                showDownloadDialog();
+//            }
+//        });
+//        builder.setNegativeButton("以后再说", new OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//        noticeDialog = builder.create();
+//        noticeDialog.show();
     }
 
-    private void showDownloadDialog(){
+    private void showDownloadDialog() {
         Builder builder = new Builder(mContext);
         builder.setTitle("软件版本更新");
 
         final LayoutInflater inflater = LayoutInflater.from(mContext);
         View v = inflater.inflate(R.layout.progress, null);
-        mProgress = (ProgressBar)v.findViewById(R.id.progress);
+        mProgress = (ProgressBar) v.findViewById(R.id.progress);
 
         builder.setView(v);
         builder.setNegativeButton("取消", new OnClickListener() {
@@ -141,13 +163,13 @@ public class UpdateManager {
             try {
                 URL url = new URL(apkUrl);
 
-                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.connect();
                 int length = conn.getContentLength();
                 InputStream is = conn.getInputStream();
 
                 File file = new File(savePath);
-                if(!file.exists()){
+                if (!file.exists()) {
                     file.mkdir();
                 }
                 String apkFile = saveFileName;
@@ -157,25 +179,25 @@ public class UpdateManager {
                 int count = 0;
                 byte buf[] = new byte[1024];
 
-                do{
+                do {
                     int numread = is.read(buf);
                     count += numread;
-                    progress =(int)(((float)count / length) * 100);
+                    progress = (int) (((float) count / length) * 100);
                     //更新进度
                     mHandler.sendEmptyMessage(DOWN_UPDATE);
-                    if(numread <= 0){
+                    if (numread <= 0) {
                         //下载完成通知安装
                         mHandler.sendEmptyMessage(DOWN_OVER);
                         break;
                     }
-                    fos.write(buf,0,numread);
-                }while(!interceptFlag);//点击取消就停止下载.
+                    fos.write(buf, 0, numread);
+                } while (!interceptFlag);//点击取消就停止下载.
 
                 fos.close();
                 is.close();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
-            } catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
@@ -184,18 +206,21 @@ public class UpdateManager {
 
     /**
      * 下载apk
+     *
      * @param
      */
 
-    private void downloadApk(){
+    private void downloadApk() {
         downLoadThread = new Thread(mdownApkRunnable);
         downLoadThread.start();
     }
+
     /**
      * 安装apk
+     *
      * @param
      */
-    private void installApk(){
+    private void installApk() {
         File apkfile = new File(saveFileName);
         if (!apkfile.exists()) {
             return;

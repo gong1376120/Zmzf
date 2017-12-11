@@ -2,7 +2,9 @@ package com.hdyg.zhimaqb.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -48,7 +50,7 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.tv_3)
     TextView tv3;
     @BindView(R.id.home_unionpay)
-    LinearLayout homeUnionpay;
+    ConstraintLayout homeUnionpay;
     @BindView(R.id.tv_4)
     TextView tv4;
     @BindView(R.id.tv_5)
@@ -56,7 +58,7 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.tv_6)
     TextView tv6;
     @BindView(R.id.home_wechat)
-    LinearLayout homeWechat;
+    ConstraintLayout homeWechat;
     @BindView(R.id.tv_7)
     TextView tv7;
     @BindView(R.id.tv_8)
@@ -64,13 +66,13 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.tv_9)
     TextView tv9;
     @BindView(R.id.home_alipay)
-    LinearLayout homeAlipay;
+    ConstraintLayout homeAlipay;
     @BindView(R.id.tv_0)
     TextView tv0;
     @BindView(R.id.tv_spot)
     TextView tvSpot;
     @BindView(R.id.ll_delete)
-    LinearLayout llDelete;
+    ConstraintLayout llDelete;
     @BindView(R.id.home_sure_btn)
     Button homeSureBtn;
     Unbinder unbinder;
@@ -93,10 +95,22 @@ public class HomeFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_home_layout, container, false);
+            mView = inflater.inflate(R.layout.fragment_home1_layout, container, false);
         }
         context = mView.getContext();
         unbinder = ButterKnife.bind(this, mView);
+        tv0.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+        tv1.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+        tv2.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+        tv3.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+        tv4.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+        tv5.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+        tv6.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+        tv7.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+        tv8.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+        tv9.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+        tvSpot.getPaint().setFlags(Paint.FAKE_BOLD_TEXT_FLAG);
+
         initView();
         return mView;
     }
@@ -271,7 +285,5 @@ public class HomeFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    public void updata() {
-        initView();
-    }
+
 }

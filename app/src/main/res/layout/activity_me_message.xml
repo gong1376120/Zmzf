@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/top_bar_layout"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/color_line"/>
+
+    <com.hdyg.zhimaqb.ui.MyScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_line"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_system"
+                style="@style/ItemLayout"
+                >
+
+                <ImageView
+                    style="@style/ItemImageView"
+                    android:src="@mipmap/me_message_system"
+                    />
+
+                <TextView
+                    style="@style/ItemTextView"
+                    android:text="系统公告"
+                    />
+
+
+                <ImageView
+                    style="@style/ItemBackView"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_line"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/color_line"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_reward"
+                style="@style/ItemLayout"
+                >
+
+                <ImageView
+                    style="@style/ItemImageView"
+                    android:src="@mipmap/me_message_jiangli"
+                    />
+
+                <TextView
+                    style="@style/ItemTextView"
+                    android:text="奖励消息"
+
+                    />
+
+
+                <ImageView
+                    style="@style/ItemBackView"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_line"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/color_line"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_profit"
+                style="@style/ItemLayout"
+                >
+
+                <ImageView
+                    style="@style/ItemImageView"
+                    android:src="@mipmap/me_message_fenrun"
+                    />
+
+                <TextView
+                    style="@style/ItemTextView"
+                    android:text="分润消息"
+                    />
+
+                <ImageView
+                    style="@style/ItemBackView"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </com.hdyg.zhimaqb.ui.MyScrollView>
+
+
+</LinearLayout>

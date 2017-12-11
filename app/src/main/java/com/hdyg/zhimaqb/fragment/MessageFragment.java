@@ -24,6 +24,7 @@ import com.hdyg.zhimaqb.R;
 import com.hdyg.zhimaqb.util.BaseUrlUtil;
 import com.hdyg.zhimaqb.util.DateUtils;
 import com.hdyg.zhimaqb.util.JsonUtil;
+import com.hdyg.zhimaqb.util.LogUtil;
 import com.hdyg.zhimaqb.view.message.MessageDetailActivity;
 
 import org.json.JSONException;
@@ -51,7 +52,7 @@ public class MessageFragment extends BaseFragment implements HomeContract.InfoVi
     TextView topContext;//title
     @BindView(R.id.tv_message_read)
     TextView tvMessageRead;//已读按钮
-//    @BindView(R.id.rv_message_meg)
+    //    @BindView(R.id.rv_message_meg)
 //    RecyclerView rvMessageMeg;//有消息时显示recycleview
     @BindView(R.id.ll_message_non_msg)
     LinearLayout llMessageNonMsg;//没有消息显示
@@ -120,7 +121,8 @@ public class MessageFragment extends BaseFragment implements HomeContract.InfoVi
      */
     @Override
     public void onGetSysTemInfoData(String str) {
-        Log.d("czb", "获取系统消息回调数据====" + str);
+
+        LogUtil.i("获取系统消息回调数据====" + str);
         try {
             JSONObject temp = new JSONObject(str);
             int status = temp.getInt("status");
@@ -155,13 +157,14 @@ public class MessageFragment extends BaseFragment implements HomeContract.InfoVi
                         public int getItemLayoutId(int viewType) {
                             return R.layout.list_item_message;
                         }
+
                         @Override
                         public void bindData(RecyclerViewHolder holder, int position, MessageModel.Data.List1 item) {
                             holder.setText(R.id.tv_item_msg_title, item.getType_name());
                         }
                     };
                     rvMessageMeg.setAdapter(adapter);
-                   // rvMessageMeg.setAdapter(adapter);
+                    // rvMessageMeg.setAdapter(adapter);
                     addListener(adapter);
 //                    pb_messages.setVisibility(View.INVISIBLE);
                     break;
@@ -184,6 +187,7 @@ public class MessageFragment extends BaseFragment implements HomeContract.InfoVi
             }
         });
     }
+
     public void update() {
         initView();
     }
